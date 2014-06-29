@@ -98,7 +98,7 @@ public class MainController implements Initializable {
         livestreamerProgess.setVisible(true);
         livestreamerProgess.setProgress(-1);
         try {
-            new ProcessBuilder("livestreamer.exe", selectedItem.getUrl(), "source").start();
+            new ProcessBuilder("livestreamer", selectedItem.getUrl(), "source").start();
         } catch (Exception e) {
             throw new RuntimeException("error executing livestreamer", e);
         }

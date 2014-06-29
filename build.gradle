@@ -4,7 +4,7 @@ apply plugin: 'idea'
 def mainClassName = "de.bisquallisoft.twitch.App"
 
 sourceCompatibility = 1.8
-version = '1.0'
+version = '0.1'
 
 repositories {
     mavenCentral()
@@ -22,10 +22,10 @@ task uberJar(type: Jar) {
 }
 
 dependencies {
-    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.+'
-    compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.+'
-    compile 'com.fasterxml.jackson.core:jackson-databind:2.4.1.1'
-    compile 'org.apache.httpcomponents:fluent-hc:4.3.4'
+    compile 'org.apache.commons:commons-lang3:3.3.+'
+    compile 'ch.qos.logback:logback-classic:1.1.+'
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.4.+'
+    compile 'org.apache.httpcomponents:fluent-hc:4.3.+'
 
 }
 
