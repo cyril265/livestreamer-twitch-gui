@@ -35,9 +35,9 @@ public class TwitchApi {
                     .returnContent().asString();
 
             ObjectMapper mapper = new ObjectMapper();
-            StreamResource l = mapper.readValue(response, StreamResource.class);
+            StreamResource resource = mapper.readValue(response, StreamResource.class);
 
-            return l.getStreams().stream()
+            return resource.getStreams().stream()
                     .map(s -> {
                         Stream stream = new Stream();
                         stream.setName(s.getChannel().getName());

@@ -1,6 +1,7 @@
 package de.bisquallisoft.twitch;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,6 +26,7 @@ public class Settings {
     private String authToken;
 
     static {
+        mapper.enable(SerializationFeature.INDENT_OUTPUT);
         try {
             Files.createDirectories(USER_DIR);
             try {

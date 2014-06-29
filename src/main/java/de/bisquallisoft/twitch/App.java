@@ -18,7 +18,7 @@ public class App extends Application {
         Parent root = loader.load();
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
-        primaryStage.setTitle("Twitch thingy");
+        primaryStage.setTitle("Livestreamer Twitch GUI");
 
         MainController controller = loader.getController();
         controller.setPrimaryStage(primaryStage);

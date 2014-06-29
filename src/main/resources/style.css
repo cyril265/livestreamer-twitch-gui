@@ -13,6 +13,11 @@
     -fx-text-fill: black;
 }
 
+.text-field {
+    -fx-text-fill: white;
+    -fx-prompt-text-fill: gray;
+}
+
 .button {
     -fx-background-color: linear-gradient(#686868 0%, #232723 25%, #373837 75%, #757575 100%),
     linear-gradient(#020b02, #3a3a3a),

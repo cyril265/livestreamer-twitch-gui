@@ -2,12 +2,14 @@ package de.bisquallisoft.twitch;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ProgressIndicator;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -39,12 +41,17 @@ public class MainController implements Initializable {
     private AnchorPane imageParent;
     @FXML
     private ProgressIndicator livestreamerProgess;
+    @FXML
+    private TextField streamLink;
 
     private TwitchApi api;
     private Settings settings = Settings.getInstance();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        previewImage.fitWidthProperty().bind(imageParent.widthProperty());
+        previewImage.fitHeightProperty().bind(imageParent.heightProperty());
+
         if (settings.getAuthToken() == null) {
             String authToken = authenticate(primaryStage);
             settings.setAuthToken(authToken);
@@ -61,6 +68,12 @@ public class MainController implements Initializable {
         Timeline timeline = new Timeline(kf);
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
+
+        streamLink.setOnAction(actionEvent -> {
+            launchLivestreamer(streamLink.getText());
+            streamLink.setText("");
+        });
+        Platform.runLater(streamList::requestFocus);
     }
 
     void loadStreams() {
@@ -71,23 +84,23 @@ public class MainController implements Initializable {
             streamList.getSelectionModel().select(0);
 
             previewImage.setImage(new Image(streams.get(0).getPreviewImage()));
-            previewImage.fitWidthProperty().bind(imageParent.widthProperty());
-            previewImage.fitHeightProperty().bind(imageParent.heightProperty());
         }
     }
 
     @FXML
     void previewClicked(MouseEvent event) {
-        launchLivestreamer(streamList.getSelectionModel().getSelectedItem());
+        launchLivestreamer(streamList.getSelectionModel().getSelectedItem().getUrl());
     }
 
     @FXML
     void streamListClicked(MouseEvent event) {
         Stream selectedItem = streamList.getSelectionModel().getSelectedItem();
-        if (event.getClickCount() == 2) {
-            launchLivestreamer(selectedItem);
-        } else if (event.getClickCount() == 1) {
-            previewImage.setImage(new Image(selectedItem.getPreviewImage()));
+        if (selectedItem != null) {
+            if (event.getClickCount() == 2) {
+                launchLivestreamer(selectedItem.getUrl());
+            } else if (event.getClickCount() == 1) {
+                previewImage.setImage(new Image(selectedItem.getPreviewImage()));
+            }
         }
     }
 
@@ -96,11 +109,11 @@ public class MainController implements Initializable {
         streamList.getItems().setAll(api.getStreams());
     }
 
-    private void launchLivestreamer(Stream selectedItem) {
+    private void launchLivestreamer(String url) {
         livestreamerProgess.setVisible(true);
         livestreamerProgess.setProgress(-1);
         try {
-            new ProcessBuilder("livestreamer", selectedItem.getUrl(), "source").start();
+            new ProcessBuilder("livestreamer", url, "source").start();
         } catch (Exception e) {
             throw new RuntimeException("error executing livestreamer", e);
         }
