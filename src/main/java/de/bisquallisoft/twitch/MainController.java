@@ -42,7 +42,9 @@ public class MainController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         if (settings.getAuthToken() == null) {
-            showLogin(primaryStage);
+            String authToken = authenticate(primaryStage);
+            settings.setAuthToken(authToken);
+            settings.save();
         }
         api = new TwitchApi(settings.getAuthToken());
 
@@ -93,7 +95,7 @@ public class MainController implements Initializable {
     }
 
 
-    private void showLogin(Window parent) {
+    private String authenticate(Window parent) {
         WebView webView = new WebView();
         webView.getEngine().load(TwitchApi.AUTH_URL);
 
@@ -102,17 +104,17 @@ public class MainController implements Initializable {
         popup.initModality(Modality.APPLICATION_MODAL);
         popup.initOwner(parent);
 
+        StringBuilder result = new StringBuilder();
         webView.getEngine().locationProperty().addListener((observableValue, ov, nv) -> {
             if (webView.getEngine().getLocation().startsWith("http://localhost")) {
                 String url = webView.getEngine().getLocation();
                 String token = StringUtils.substringBetween(url, "=", "&");
-                settings.setAuthToken(token);
-                settings.save();
+                result.append(token);
                 popup.close();
             }
         });
-
         popup.showAndWait();
+        return result.toString();
     }
 
 
