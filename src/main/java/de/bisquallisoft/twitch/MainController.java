@@ -2,6 +2,7 @@ package de.bisquallisoft.twitch;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
@@ -17,12 +18,15 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.util.Duration;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
+    private static final Logger log = LoggerFactory.getLogger(MainController.class);
 
     private Stage primaryStage;
 
@@ -50,6 +54,14 @@ public class MainController implements Initializable {
 
         previewImage.fitWidthProperty().bind(imageParent.widthProperty());
         loadStreams();
+
+        KeyFrame kf = new KeyFrame(Duration.minutes(5), event -> {
+            log.debug("refreshing streams");
+            streamList.getItems().setAll(api.getStreams());
+        });
+        Timeline timeline = new Timeline(kf);
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.play();
     }
 
     void loadStreams() {
@@ -77,6 +89,12 @@ public class MainController implements Initializable {
         }
     }
 
+
+    @FXML
+    void refreshPressed(ActionEvent event) {
+        streamList.getItems().setAll(api.getStreams());
+    }
+
     private void launchLivestreamer(Stream selectedItem) {
         livestreamerProgess.setVisible(true);
         livestreamerProgess.setProgress(-1);
@@ -87,7 +105,7 @@ public class MainController implements Initializable {
         }
 
         final KeyFrame kf = new KeyFrame(Duration.seconds(6), actionEvent -> {
-            livestreamerProgess.setProgress(1.0);
+            livestreamerProgess.setProgress(1);
             livestreamerProgess.setVisible(false);
         });
         Timeline timeline = new Timeline(kf);
