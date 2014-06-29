@@ -1,0 +1,38 @@
+apply plugin: 'java'
+apply plugin: 'idea'
+
+def mainClassName = "de.bisquallisoft.twitch.Main"
+
+sourceCompatibility = 1.8
+version = '1.0'
+
+repositories {
+    mavenCentral()
+}
+
+task uberJar(type: Jar) {
+    from sourceSets.main.output
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+    exclude 'META-INF/**'
+    manifest {
+        attributes 'Main-Class': mainClassName
+    }
+}
+
+dependencies {
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.+'
+    compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.+'
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.4.1.1'
+    compile 'org.apache.httpcomponents:fluent-hc:4.3.4'
+
+}
+
+artifacts {
+    archives uberJar
+}
+
+wrapper {
+    gradleVersion = '1.12'
+}
