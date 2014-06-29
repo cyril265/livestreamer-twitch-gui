@@ -1,6 +1,6 @@
 livestreamer-twitch-gui
 =======================
 
-Requirements:
+####Requirements
 - Java 8
 - Livestreamer (http://livestreamer.readthedocs.org/en/latest/) in path
