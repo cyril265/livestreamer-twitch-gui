@@ -52,11 +52,8 @@ public class MainController implements Initializable {
         }
         api = new TwitchApi(settings.getAuthToken());
 
-//        previewImage.fitWidthProperty().bind(imageParent.widthProperty());
-//        livestreamerProgess.setMaxWidth(480);
-
         loadStreams();
-
+        //refresh streams every 5 minutes
         KeyFrame kf = new KeyFrame(Duration.minutes(5), event -> {
             log.debug("refreshing streams");
             streamList.getItems().setAll(api.getStreams());
@@ -68,7 +65,7 @@ public class MainController implements Initializable {
 
     void loadStreams() {
         List<Stream> streams = api.getStreams();
-        streamList.getItems().addAll(streams);
+        streamList.getItems().setAll(streams);
 
         if (!streams.isEmpty()) {
             streamList.getSelectionModel().select(0);
