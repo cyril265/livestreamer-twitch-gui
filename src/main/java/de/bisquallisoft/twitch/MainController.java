@@ -1,10 +1,12 @@
 package de.bisquallisoft.twitch;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.ListView;
-import javafx.scene.control.SplitPane;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -13,9 +15,9 @@ import javafx.scene.web.WebView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import javafx.util.Duration;
 import org.apache.commons.lang3.StringUtils;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -25,14 +27,13 @@ public class MainController implements Initializable {
     private Stage primaryStage;
 
     @FXML
-    private SplitPane root;
-
-    @FXML
     private ListView<Stream> streamList;
     @FXML
     private ImageView previewImage;
     @FXML
     private AnchorPane imageParent;
+    @FXML
+    private ProgressIndicator livestreamerProgess;
 
     private TwitchApi api;
     private Settings settings = Settings.getInstance();
@@ -40,12 +41,12 @@ public class MainController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        previewImage.fitWidthProperty().bind(imageParent.widthProperty());
         if (settings.getAuthToken() == null) {
             showLogin(primaryStage);
         }
         api = new TwitchApi(settings.getAuthToken());
 
+        previewImage.fitWidthProperty().bind(imageParent.widthProperty());
         loadStreams();
     }
 
@@ -61,7 +62,6 @@ public class MainController implements Initializable {
 
     @FXML
     void previewClicked(MouseEvent event) {
-        System.out.println("preview : " + streamList.getSelectionModel().getSelectedItem());
         launchLivestreamer(streamList.getSelectionModel().getSelectedItem());
     }
 
@@ -76,12 +76,22 @@ public class MainController implements Initializable {
     }
 
     private void launchLivestreamer(Stream selectedItem) {
+        livestreamerProgess.setVisible(true);
+        livestreamerProgess.setProgress(-1);
         try {
             new ProcessBuilder("livestreamer.exe", selectedItem.getUrl(), "source").start();
-        } catch (IOException e) {
+        } catch (Exception e) {
             throw new RuntimeException("error executing livestreamer", e);
         }
+
+        final KeyFrame kf = new KeyFrame(Duration.seconds(6), actionEvent -> {
+            livestreamerProgess.setProgress(1.0);
+            livestreamerProgess.setVisible(false);
+        });
+        Timeline timeline = new Timeline(kf);
+        timeline.play();
     }
+
 
     private void showLogin(Window parent) {
         WebView webView = new WebView();
