@@ -7,10 +7,10 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 <SplitPane dividerPositions="0.3" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-           prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+           prefHeight="456.0" prefWidth="732.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
            fx:controller="de.bisquallisoft.twitch.MainController">
     <items>
-        <AnchorPane maxWidth="250.0" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+        <AnchorPane maxWidth="250.0" minHeight="0.0" minWidth="150.0" prefHeight="160.0" prefWidth="100.0">
             <children>
                 <ListView fx:id="streamList" layoutX="-13.0" layoutY="46.0" onMouseClicked="#streamListClicked"
                           prefHeight="359.0" prefWidth="174.0" AnchorPane.bottomAnchor="39.0"
@@ -19,14 +19,15 @@
                         AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0"/>
             </children>
         </AnchorPane>
-        <AnchorPane fx:id="imageParent" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+        <AnchorPane fx:id="imageParent" minWidth="0.0" prefHeight="597.0" prefWidth="438.0">
             <children>
-                <ImageView fx:id="previewImage" fitHeight="194.0" fitWidth="395.0" layoutX="14.0" layoutY="14.0"
+                <ImageView fx:id="previewImage" fitHeight="300.0" fitWidth="480.0" layoutX="14.0" layoutY="14.0"
                            onMouseClicked="#previewClicked" pickOnBounds="true" preserveRatio="true"
-                           style="-fx-cursor: hand;" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0"/>
-                <ProgressIndicator fx:id="livestreamerProgess" prefHeight="257.0" prefWidth="416.0" progress="0.0"
-                                   visible="false" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-                                   AnchorPane.topAnchor="0.0"/>
+                           style="-fx-cursor: hand;" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0"
+                           AnchorPane.topAnchor="14.0"/>
+                <ProgressIndicator fx:id="livestreamerProgess" layoutX="109.0" layoutY="40.0" maxHeight="300.0"
+                                   maxWidth="480.0" minWidth="0.0" prefHeight="300.0" prefWidth="480.0" progress="0.0"
+                                   visible="false" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="14.0"/>
             </children>
         </AnchorPane>
     </items>

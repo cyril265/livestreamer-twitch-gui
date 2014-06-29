@@ -52,7 +52,9 @@ public class MainController implements Initializable {
         }
         api = new TwitchApi(settings.getAuthToken());
 
-        previewImage.fitWidthProperty().bind(imageParent.widthProperty());
+//        previewImage.fitWidthProperty().bind(imageParent.widthProperty());
+//        livestreamerProgess.setMaxWidth(480);
+
         loadStreams();
 
         KeyFrame kf = new KeyFrame(Duration.minutes(5), event -> {
