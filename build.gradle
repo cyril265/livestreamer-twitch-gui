@@ -1,7 +1,7 @@
 apply plugin: 'java'
 apply plugin: 'idea'
 
-def mainClassName = "de.bisquallisoft.twitch.Main"
+def mainClassName = "de.bisquallisoft.twitch.App"
 
 sourceCompatibility = 1.8
 version = '1.0'
