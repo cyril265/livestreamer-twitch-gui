@@ -43,8 +43,7 @@ public class TwitchApi {
                         stream.setName(s.getChannel().getName());
                         stream.setUrl(s.getChannel().getUrl());
                         stream.setViewers(s.getViewers());
-                        stream.setPreviewImage(s.getPreview().getTemplate().replace("{width}", "1280").replace("{height}", "720"));
-                        System.out.println(stream.getPreviewImage());
+                        stream.setPreviewImage(s.getPreview().getLarge());
                         return stream;
                     })
                     .collect(Collectors.toList());
