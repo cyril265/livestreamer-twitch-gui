@@ -17,7 +17,7 @@ public class TwitchApi {
     private String authToken;
 
     public static final String AUTH_URL = "https://api.twitch.tv/kraken/oauth2/authorize?response_type=token" +
-            "&client_id=r4h4mcs056enp6p9cuiytu8p0n5f2qj" +
+            "&client_id=" + CLIENT_ID +
             "&redirect_uri=http://localhost/twitch_oauth" +
             "&scope=user_read";
 
