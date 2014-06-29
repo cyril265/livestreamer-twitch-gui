@@ -69,11 +69,13 @@ public class MainController implements Initializable {
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
 
-        streamLink.setOnAction(actionEvent -> {
-            launchLivestreamer(streamLink.getText());
-            streamLink.setText("");
-        });
+        streamLink.setOnAction(this::streamLinkAction);
         Platform.runLater(streamList::requestFocus);
+    }
+
+    void streamLinkAction(ActionEvent event) {
+        launchLivestreamer(streamLink.getText());
+        streamLink.setText("");
     }
 
     void loadStreams() {
