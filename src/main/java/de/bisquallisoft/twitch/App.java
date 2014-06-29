@@ -8,9 +8,7 @@ import javafx.stage.Stage;
 
 import java.net.URL;
 
-
 public class App extends Application {
-
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -28,7 +26,6 @@ public class App extends Application {
         primaryStage.show();
         scene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
     }
-
 
     public static void main(String[] args) {
         launch(args);

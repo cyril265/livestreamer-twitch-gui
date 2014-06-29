@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
+
     private static final Logger log = LoggerFactory.getLogger(MainController.class);
 
     private Stage primaryStage;
@@ -41,7 +42,6 @@ public class MainController implements Initializable {
 
     private TwitchApi api;
     private Settings settings = Settings.getInstance();
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -69,7 +69,10 @@ public class MainController implements Initializable {
 
         if (!streams.isEmpty()) {
             streamList.getSelectionModel().select(0);
+
             previewImage.setImage(new Image(streams.get(0).getPreviewImage()));
+            previewImage.fitWidthProperty().bind(imageParent.widthProperty());
+            previewImage.fitHeightProperty().bind(imageParent.heightProperty());
         }
     }
 
@@ -87,7 +90,6 @@ public class MainController implements Initializable {
             previewImage.setImage(new Image(selectedItem.getPreviewImage()));
         }
     }
-
 
     @FXML
     void refreshPressed(ActionEvent event) {
@@ -111,7 +113,6 @@ public class MainController implements Initializable {
         timeline.play();
     }
 
-
     private String authenticate(Window parent) {
         WebView webView = new WebView();
         webView.getEngine().load(TwitchApi.AUTH_URL);
@@ -134,8 +135,9 @@ public class MainController implements Initializable {
         return result.toString();
     }
 
-
     void setPrimaryStage(Stage primaryStage) {
         this.primaryStage = primaryStage;
+        primaryStage.setMinWidth(166.0);
+        primaryStage.setMinHeight(70.0);
     }
 }
