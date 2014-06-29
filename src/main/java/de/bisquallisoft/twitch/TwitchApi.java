@@ -16,10 +16,10 @@ public class TwitchApi {
     public static final String CLIENT_ID = "r4h4mcs056enp6p9cuiytu8p0n5f2qj";
     private String authToken;
 
-    public static final String AUTH_URL = "https://api.twitch.tv/kraken/oauth2/authorize?response_type=token" +
-            "&client_id=" + CLIENT_ID +
-            "&redirect_uri=http://localhost/twitch_oauth" +
-            "&scope=user_read";
+    public static final String AUTH_URL = "https://api.twitch.tv/kraken/oauth2/authorize?response_type=token"
+            + "&client_id=" + CLIENT_ID
+            + "&redirect_uri=http://localhost/twitch_oauth"
+            + "&scope=user_read";
 
     public TwitchApi(String authToken) {
         this.authToken = authToken;
@@ -43,8 +43,8 @@ public class TwitchApi {
                         stream.setName(s.getChannel().getName());
                         stream.setUrl(s.getChannel().getUrl());
                         stream.setViewers(s.getViewers());
-                        stream.setPreviewImage(s.getPreview().getLarge());
-
+                        stream.setPreviewImage(s.getPreview().getTemplate().replace("{width}", "1280").replace("{height}", "720"));
+                        System.out.println(stream.getPreviewImage());
                         return stream;
                     })
                     .collect(Collectors.toList());
