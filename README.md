@@ -1,7 +1,8 @@
 Livestreamer Twitch GUI
 =======================
 
-This program allows you to view a list of your followed twitch channels and start playback using livestreamer. The streams are refreshed periodically.
+This program displays your followed online streams. Livestreamer playback can be started by clicking on the preview.
+The streams are refreshed periodically.
 
 ![Alt text](https://raw.github.com/squalloser/livestreamer-twitch-gui/screenshots/screenshot1.jpg)
 
