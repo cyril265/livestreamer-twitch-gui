@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.*?>
-<?import java.lang.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-
 <AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.bisquallisoft.twitch.MainController">
     <children>
         <SplitPane dividerPositions="0.2" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="500.0" prefWidth="850.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -29,8 +25,9 @@
             </VBox>
             <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0">
                <children>
-                  <TextField fx:id="txtStreamStatus" disable="true" editable="false" maxHeight="-Infinity" minHeight="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="45.0" text="dgfhdhgfhgf" VBox.vgrow="NEVER">
-                     <font>
+                   <TextField fx:id="txtStreamStatus" editable="false" maxHeight="-Infinity" minHeight="-Infinity"
+                              nodeOrientation="LEFT_TO_RIGHT" prefHeight="45.0" VBox.vgrow="NEVER">
+                   <font>
                         <Font name="System Bold" size="24.0" />
                      </font>
                   </TextField>
@@ -43,8 +40,9 @@
                         <Insets bottom="5.0" left="5.0" right="5.0" />
                      </VBox.margin>
                   </Pane>
-                  <HBox disable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="28.0" spacing="4.0" VBox.vgrow="NEVER">
-                     <opaqueInsets>
+                   <HBox disable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                         minHeight="-Infinity" minWidth="0.0" prefHeight="28.0" spacing="4.0" VBox.vgrow="NEVER">
+                   <opaqueInsets>
                         <Insets />
                      </opaqueInsets>
                      <children>
