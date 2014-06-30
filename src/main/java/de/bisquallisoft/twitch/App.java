@@ -12,6 +12,9 @@ public class App extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        primaryStage.setMinWidth(100.0);
+        primaryStage.setMinHeight(80.0);
+
         URL location = getClass().getResource("/main.fxml");
         FXMLLoader loader = new FXMLLoader(location);
 

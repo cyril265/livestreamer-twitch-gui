@@ -19,4 +19,9 @@ public class FxScheduler {
         Timeline timeline = new Timeline(kf);
         timeline.play();
     }
+
+    public static void runAsync(Runnable task) {
+        Thread thread = new Thread(task);
+        thread.start();
+    }
 }

@@ -22,7 +22,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
@@ -63,26 +62,33 @@ public class MainController implements Initializable {
         }
         api = new TwitchApi(settings.getAuthToken());
 
-        loadStreams();
         streamList.getSelectionModel().selectedItemProperty().addListener((observableValue, ov, nv) -> {
-            if (nv != null) setPreview(nv);
+            if (nv != null) {
+                previewImage.setImage(null);
+                setPreview(nv);
+            }
         });
         //refresh streams every 3 minutes
         FxScheduler.schedule(Duration.minutes(3), () -> {
             log.debug("refreshing streams");
-            Stream selectedItem = streamList.getSelectionModel().getSelectedItem();
-            streamList.getItems().setAll(api.getStreams());
-            if (!streamList.getItems().isEmpty()) {
-                if (selectedItem != null && streamList.getItems().contains(selectedItem)) {
-                    streamList.getSelectionModel().select(selectedItem);
-                } else {
-                    streamList.getSelectionModel().select(0);
-                }
-            }
+            refreshStreams();
         });
 
         streamLink.setOnAction(this::streamLinkAction);
         Platform.runLater(streamList::requestFocus);
+        refreshStreams();
+    }
+
+    private void refreshStreams() {
+        Stream selectedItem = streamList.getSelectionModel().getSelectedItem();
+        streamList.getItems().setAll(api.getStreams());
+        if (!streamList.getItems().isEmpty()) {
+            if (selectedItem != null && streamList.getItems().contains(selectedItem)) {
+                streamList.getSelectionModel().select(selectedItem);
+            } else {
+                streamList.getSelectionModel().select(0);
+            }
+        }
     }
 
     void streamLinkAction(ActionEvent event) {
@@ -90,15 +96,6 @@ public class MainController implements Initializable {
         streamLink.setText("");
     }
 
-    void loadStreams() {
-        List<Stream> streams = api.getStreams();
-        streamList.getItems().setAll(streams);
-
-        if (!streams.isEmpty()) {
-            streamList.getSelectionModel().select(0);
-            setPreview(streams.get(0));
-        }
-    }
 
     @FXML
     void previewClicked(MouseEvent event) {
@@ -114,7 +111,11 @@ public class MainController implements Initializable {
     }
 
     private void setPreview(Stream stream) {
-        previewImage.setImage(new Image(stream.getPreviewImage()));
+        FxScheduler.runAsync(() -> {
+            Image img = new Image(stream.getPreviewImage());
+            Platform.runLater(() -> previewImage.setImage(img));
+        });
+
         txtStreamStatus.setText(stream.getStatus());
         txtViewers.setText(stream.getViewers() + "");
         txtGame.setText(stream.getGame());
@@ -122,7 +123,7 @@ public class MainController implements Initializable {
 
     @FXML
     void refreshPressed(ActionEvent event) {
-        streamList.getItems().setAll(api.getStreams());
+        refreshStreams();
     }
 
     private void launchLivestreamer(String url) {
@@ -167,7 +168,5 @@ public class MainController implements Initializable {
 
     void setPrimaryStage(Stage primaryStage) {
         this.primaryStage = primaryStage;
-        primaryStage.setMinWidth(100.0);
-        primaryStage.setMinHeight(80.0);
     }
 }
