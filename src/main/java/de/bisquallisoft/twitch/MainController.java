@@ -1,7 +1,5 @@
 package de.bisquallisoft.twitch;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,7 +11,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.web.WebView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -26,8 +24,6 @@ import org.slf4j.LoggerFactory;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
-import javafx.scene.control.Button;
-import javafx.scene.layout.Pane;
 
 public class MainController implements Initializable {
 
@@ -68,14 +64,22 @@ public class MainController implements Initializable {
         api = new TwitchApi(settings.getAuthToken());
 
         loadStreams();
-        //refresh streams every 3 minutes
-        KeyFrame kf = new KeyFrame(Duration.minutes(3), event -> {
-            log.debug("refreshing streams");
-            streamList.getItems().setAll(api.getStreams());
+        streamList.getSelectionModel().selectedItemProperty().addListener((observableValue, ov, nv) -> {
+            if (nv != null) setPreview(nv);
         });
-        Timeline timeline = new Timeline(kf);
-        timeline.setCycleCount(Timeline.INDEFINITE);
-        timeline.play();
+        //refresh streams every 3 minutes
+        FxScheduler.schedule(Duration.minutes(3), () -> {
+            log.debug("refreshing streams");
+            Stream selectedItem = streamList.getSelectionModel().getSelectedItem();
+            streamList.getItems().setAll(api.getStreams());
+            if (!streamList.getItems().isEmpty()) {
+                if (selectedItem != null && streamList.getItems().contains(selectedItem)) {
+                    streamList.getSelectionModel().select(selectedItem);
+                } else {
+                    streamList.getSelectionModel().select(0);
+                }
+            }
+        });
 
         streamLink.setOnAction(this::streamLinkAction);
         Platform.runLater(streamList::requestFocus);
@@ -104,12 +108,8 @@ public class MainController implements Initializable {
     @FXML
     void streamListClicked(MouseEvent event) {
         Stream selectedItem = streamList.getSelectionModel().getSelectedItem();
-        if (selectedItem != null) {
-            if (event.getClickCount() == 2) {
-                launchLivestreamer(selectedItem.getUrl());
-            } else if (event.getClickCount() == 1) {
-                setPreview(selectedItem);
-            }
+        if (selectedItem != null && event.getClickCount() == 2) {
+            launchLivestreamer(selectedItem.getUrl());
         }
     }
 
@@ -138,12 +138,10 @@ public class MainController implements Initializable {
             throw new RuntimeException("error executing livestreamer", e);
         }
 
-        final KeyFrame kf = new KeyFrame(Duration.seconds(6), actionEvent -> {
+        FxScheduler.scheduleOnce(Duration.seconds(6), () -> {
             livestreamerProgess.setProgress(1);
             livestreamerProgess.setVisible(false);
         });
-        Timeline timeline = new Timeline(kf);
-        timeline.play();
     }
 
     private String authenticate(Window parent) {
@@ -156,9 +154,8 @@ public class MainController implements Initializable {
         popup.initOwner(parent);
 
         StringBuilder result = new StringBuilder();
-        webView.getEngine().locationProperty().addListener((observableValue, ov, nv) -> {
-            if (webView.getEngine().getLocation().startsWith("http://localhost")) {
-                String url = webView.getEngine().getLocation();
+        webView.getEngine().locationProperty().addListener((observableValue, ov, url) -> {
+            if (url.startsWith("http://localhost")) {
                 String token = StringUtils.substringBetween(url, "=", "&");
                 result.append(token);
                 popup.close();
