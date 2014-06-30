@@ -29,7 +29,7 @@
             </VBox>
             <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0">
                <children>
-                  <TextField fx:id="txtStreamStatus" disable="true" editable="false" focusTraversable="false" maxHeight="-Infinity" minHeight="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="45.0" VBox.vgrow="NEVER">
+                  <TextField fx:id="txtStreamStatus" disable="true" editable="false" maxHeight="-Infinity" minHeight="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="45.0" text="dgfhdhgfhgf" VBox.vgrow="NEVER">
                      <font>
                         <Font name="System Bold" size="24.0" />
                      </font>
@@ -56,7 +56,7 @@
                               <Insets bottom="6.0" top="6.0" />
                            </HBox.margin>
                         </ImageView>
-                        <TextField fx:id="txtViewers" alignment="CENTER_RIGHT" disable="true" editable="false" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="0.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="24.0" prefWidth="65.0" HBox.hgrow="NEVER" />
+                        <TextField fx:id="txtViewers" disable="true" editable="false" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="0.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="24.0" prefWidth="65.0" HBox.hgrow="NEVER" />
                         <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true" HBox.hgrow="NEVER">
                            <HBox.margin>
                               <Insets bottom="4.0" left="40.0" top="4.0" />
@@ -65,7 +65,7 @@
                               <Image url="@icon_gamepad.png" />
                            </image>
                         </ImageView>
-                        <TextField fx:id="txtGame" disable="true" editable="false" focusTraversable="false" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="0.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="24.0" HBox.hgrow="ALWAYS" />
+                        <TextField fx:id="txtGame" disable="true" editable="false" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="0.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="24.0" HBox.hgrow="ALWAYS" />
                      </children>
                      <VBox.margin>
                         <Insets />

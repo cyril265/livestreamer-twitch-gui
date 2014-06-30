@@ -2,18 +2,23 @@
     -fx-base: rgb(50, 50, 50);
     -fx-background: rgb(50, 50, 50);
     -fx-control-inner-background: rgb(50, 50, 50);
-/*    -fx-accent: #7550ba;
-    -fx-focus-color: #7550ba;*/
+    -fx-accent: #7550ba;
+    -fx-focus-color: #7550ba;
 }
 
-/*.text-field:readonly {
-    -fx-background-color: rgb(75, 75, 75);
-    -fx-text-fill: darkgrey;
-}*/
+.text-field:readonly {
+    -fx-background-color: rgb(50, 50, 50);
+    /*-fx-text-fill: white;*/
+}
 
-/*.button:hover {
+.text-field:disabled {
+    -fx-background-color: rgb(50, 50, 50);
+    /*-fx-text-fill: white;*/
+}
+
+.button:hover {
     -fx-text-fill: black;
-}*/
+}
 
 .text-field {
     -fx-text-fill: white;
