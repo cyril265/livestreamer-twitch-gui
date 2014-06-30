@@ -26,6 +26,8 @@ import org.slf4j.LoggerFactory;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.scene.control.Button;
+import javafx.scene.layout.Pane;
 
 public class MainController implements Initializable {
 
@@ -38,11 +40,17 @@ public class MainController implements Initializable {
     @FXML
     private ImageView previewImage;
     @FXML
-    private AnchorPane imageParent;
-    @FXML
     private ProgressIndicator livestreamerProgess;
     @FXML
     private TextField streamLink;
+    @FXML
+    private TextField txtStreamStatus;
+    @FXML
+    private TextField txtViewers;
+    @FXML
+    private Pane imageParent;
+    @FXML
+    private TextField txtGame;
 
     private TwitchApi api;
     private Settings settings = Settings.getInstance();
@@ -60,8 +68,8 @@ public class MainController implements Initializable {
         api = new TwitchApi(settings.getAuthToken());
 
         loadStreams();
-        //refresh streams every 5 minutes
-        KeyFrame kf = new KeyFrame(Duration.minutes(5), event -> {
+        //refresh streams every 3 minutes
+        KeyFrame kf = new KeyFrame(Duration.minutes(3), event -> {
             log.debug("refreshing streams");
             streamList.getItems().setAll(api.getStreams());
         });
@@ -84,8 +92,7 @@ public class MainController implements Initializable {
 
         if (!streams.isEmpty()) {
             streamList.getSelectionModel().select(0);
-
-            previewImage.setImage(new Image(streams.get(0).getPreviewImage()));
+            setPreview(streams.get(0));
         }
     }
 
@@ -101,9 +108,16 @@ public class MainController implements Initializable {
             if (event.getClickCount() == 2) {
                 launchLivestreamer(selectedItem.getUrl());
             } else if (event.getClickCount() == 1) {
-                previewImage.setImage(new Image(selectedItem.getPreviewImage()));
+                setPreview(selectedItem);
             }
         }
+    }
+
+    private void setPreview(Stream stream) {
+        previewImage.setImage(new Image(stream.getPreviewImage()));
+        txtStreamStatus.setText(stream.getStatus());
+        txtViewers.setText(stream.getViewers() + "");
+        txtGame.setText(stream.getGame());
     }
 
     @FXML
@@ -112,6 +126,10 @@ public class MainController implements Initializable {
     }
 
     private void launchLivestreamer(String url) {
+        livestreamerProgess.setPrefHeight(imageParent.getHeight());
+        System.out.println("height:" + imageParent.getHeight() + " width:" + imageParent.getWidth());
+        livestreamerProgess.setPrefWidth(imageParent.getWidth());
+
         livestreamerProgess.setVisible(true);
         livestreamerProgess.setProgress(-1);
         try {
@@ -152,7 +170,7 @@ public class MainController implements Initializable {
 
     void setPrimaryStage(Stage primaryStage) {
         this.primaryStage = primaryStage;
-        primaryStage.setMinWidth(166.0);
-        primaryStage.setMinHeight(70.0);
+        primaryStage.setMinWidth(100.0);
+        primaryStage.setMinHeight(80.0);
     }
 }

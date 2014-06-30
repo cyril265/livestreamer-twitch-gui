@@ -44,6 +44,9 @@ public class TwitchApi {
                         stream.setUrl(s.getChannel().getUrl());
                         stream.setViewers(s.getViewers());
                         stream.setPreviewImage(s.getPreview().getLarge());
+                        stream.setStatus(s.getChannel().getStatus());
+                        stream.setGame(s.getChannel().getGame());
+                        stream.setLastUpdateTime(s.getChannel().getUpdated_at());
                         return stream;
                     })
                     .collect(Collectors.toList());

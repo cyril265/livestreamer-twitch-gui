@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import java.lang.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.text.*?>
@@ -10,25 +11,71 @@
 
 <AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.bisquallisoft.twitch.MainController">
     <children>
-        <SplitPane dividerPositions="0.0" layoutY="47.0" maxHeight="10000.0" maxWidth="10000.0" minHeight="0.0" minWidth="0.0" prefHeight="353.0" prefWidth="700.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <SplitPane dividerPositions="0.2" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="500.0" prefWidth="850.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <items>
-                <AnchorPane maxWidth="150.0" minHeight="0.0" minWidth="150.0" prefHeight="294.0" prefWidth="150.0">
-                    <children>
-                        <ListView fx:id="streamList" layoutX="-13.0" layoutY="31.0" onMouseClicked="#streamListClicked" prefHeight="281.0" prefWidth="150.0" AnchorPane.bottomAnchor="32.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="28.0" />
-                        <Button fx:id="refreshStreams" layoutX="13.0" layoutY="358.0" mnemonicParsing="false" onAction="#refreshPressed" text="Refresh" AnchorPane.bottomAnchor="3.0" AnchorPane.leftAnchor="3.0" AnchorPane.rightAnchor="3.0" />
-                        <TextField fx:id="streamLink" layoutX="6.0" layoutY="2.0" minHeight="-Infinity" prefHeight="22.0" prefWidth="130.0" promptText="Open stream link" AnchorPane.leftAnchor="3.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="3.0">
+            <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" spacing="2.0" SplitPane.resizableWithParent="false">
+               <children>
+                        <TextField fx:id="streamLink" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="0.0" prefHeight="22.0" promptText="Open stream link" VBox.vgrow="NEVER">
                             <font>
                                 <Font size="12.0" />
                             </font>
                         </TextField>
-                    </children>
-                </AnchorPane>
-                <AnchorPane fx:id="imageParent" minHeight="0.0" minWidth="0.0">
-                    <children>
-                        <ImageView fx:id="previewImage" onMouseClicked="#previewClicked" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;" />
-                        <ProgressIndicator fx:id="livestreamerProgess" minHeight="0.0" minWidth="0.0" progress="0.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                    </children>
-                </AnchorPane>
+                        <ListView fx:id="streamList" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" onMouseClicked="#streamListClicked" VBox.vgrow="ALWAYS" />
+                        <Button maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" mnemonicParsing="false" onAction="#refreshPressed" prefHeight="24.0" text="Refresh" VBox.vgrow="NEVER" />
+               </children>
+               <padding>
+                  <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+               </padding>
+            </VBox>
+            <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0">
+               <children>
+                  <TextField fx:id="txtStreamStatus" disable="true" editable="false" focusTraversable="false" maxHeight="-Infinity" minHeight="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="45.0" VBox.vgrow="NEVER">
+                     <font>
+                        <Font name="System Bold" size="24.0" />
+                     </font>
+                  </TextField>
+                  <Pane fx:id="imageParent" VBox.vgrow="ALWAYS">
+                     <children>
+                              <ImageView fx:id="previewImage" onMouseClicked="#previewClicked" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;" />
+                              <ProgressIndicator fx:id="livestreamerProgess" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" progress="0.0" visible="false" />
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" />
+                     </VBox.margin>
+                  </Pane>
+                  <HBox disable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="28.0" spacing="4.0" VBox.vgrow="NEVER">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <children>
+                        <ImageView fitHeight="12.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true" HBox.hgrow="NEVER">
+                           <image>
+                              <Image url="@twitch_viewcount.png" />
+                           </image>
+                           <HBox.margin>
+                              <Insets bottom="6.0" top="6.0" />
+                           </HBox.margin>
+                        </ImageView>
+                        <TextField fx:id="txtViewers" alignment="CENTER_RIGHT" disable="true" editable="false" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="0.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="24.0" prefWidth="65.0" HBox.hgrow="NEVER" />
+                        <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true" HBox.hgrow="NEVER">
+                           <HBox.margin>
+                              <Insets bottom="4.0" left="40.0" top="4.0" />
+                           </HBox.margin>
+                           <image>
+                              <Image url="@icon_gamepad.png" />
+                           </image>
+                        </ImageView>
+                        <TextField fx:id="txtGame" disable="true" editable="false" focusTraversable="false" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="0.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="24.0" HBox.hgrow="ALWAYS" />
+                     </children>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                     <padding>
+                        <Insets bottom="2.0" left="5.0" right="5.0" top="2.0" />
+                     </padding>
+                  </HBox>
+               </children>
+            </VBox>
             </items>
         </SplitPane>
     </children>

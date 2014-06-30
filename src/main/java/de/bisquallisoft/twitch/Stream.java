@@ -4,10 +4,14 @@ package de.bisquallisoft.twitch;
  * @author squall
  */
 public class Stream {
+
     private String name;
     private String url;
     private int viewers;
     private String previewImage;
+    private String status;
+    private String game;
+    private String lastUpdateTime;
 
     public String getPreviewImage() {
         return previewImage;
@@ -39,6 +43,30 @@ public class Stream {
 
     public void setViewers(int viewers) {
         this.viewers = viewers;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getGame() {
+        return game;
+    }
+
+    public void setGame(String game) {
+        this.game = game;
+    }
+
+    public String getLastUpdateTime() {
+        return lastUpdateTime;
+    }
+
+    public void setLastUpdateTime(String lastUpdateTime) {
+        this.lastUpdateTime = lastUpdateTime;
     }
 
     @Override
