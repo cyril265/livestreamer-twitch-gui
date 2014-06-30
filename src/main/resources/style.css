@@ -2,6 +2,8 @@
     -fx-base: rgb(50, 50, 50);
     -fx-background: rgb(50, 50, 50);
     -fx-control-inner-background: rgb(50, 50, 50);
+    -fx-accent: #7550ba;
+    -fx-focus-color: transparent;
 }
 
 .text-field:readonly {
