@@ -4,7 +4,7 @@ apply plugin: 'idea'
 def mainClassName = "de.bisquallisoft.twitch.App"
 
 sourceCompatibility = 1.8
-version = '0.1'
+version = '0.3'
 
 repositories {
     mavenCentral()
