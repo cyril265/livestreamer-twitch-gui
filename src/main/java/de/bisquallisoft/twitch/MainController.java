@@ -71,7 +71,7 @@ public class MainController implements Initializable {
             }
         });
         //refresh streams every 3 minutes
-        FxScheduler.schedule(Duration.minutes(3), () -> {
+        FxScheduler.schedule(Duration.minutes(1), () -> {
             log.debug("refreshing streams");
             refreshStreams();
         });
