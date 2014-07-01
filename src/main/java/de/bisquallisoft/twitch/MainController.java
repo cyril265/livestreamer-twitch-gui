@@ -1,7 +1,7 @@
 package de.bisquallisoft.twitch;
 
 import javafx.application.Platform;
-import javafx.collections.ObservableList;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -24,6 +24,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
@@ -81,11 +83,11 @@ public class MainController implements Initializable {
         refreshStreams();
 
 
-
     }
 
     private void refreshStreams() {
-        ObservableList<Stream> oldStreamList = streamList.getItems();
+        List<Stream> oldStreamList = new ArrayList<>();
+        FXCollections.copy(streamList.getItems(), oldStreamList);
         Stream selectedItem = streamList.getSelectionModel().getSelectedItem();
         streamList.getItems().setAll(api.getStreams());
         if (!streamList.getItems().isEmpty()) {
@@ -95,8 +97,7 @@ public class MainController implements Initializable {
                 streamList.getSelectionModel().select(0);
             }
             for (Stream s : streamList.getItems()) {
-//                if (!oldStreamList.contains(s)) {
-                Platform.runLater(() -> {
+                if (!oldStreamList.contains(s)) {
                     Notifications.create()
                             .title(s.getName() + " just went live!")
                             .text(s.getStatus())
@@ -104,9 +105,8 @@ public class MainController implements Initializable {
                             .hideAfter(Duration.seconds(3))
                             .darkStyle()
                             .show();
-                });
 
-//                }
+                }
             }
         }
 
