@@ -1,6 +1,7 @@
 package de.bisquallisoft.twitch;
 
 import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -18,6 +19,7 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.util.Duration;
 import org.apache.commons.lang3.StringUtils;
+import org.controlsfx.control.Notifications;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -77,9 +79,13 @@ public class MainController implements Initializable {
         streamLink.setOnAction(this::streamLinkAction);
         Platform.runLater(streamList::requestFocus);
         refreshStreams();
+
+
+
     }
 
     private void refreshStreams() {
+        ObservableList<Stream> oldStreamList = streamList.getItems();
         Stream selectedItem = streamList.getSelectionModel().getSelectedItem();
         streamList.getItems().setAll(api.getStreams());
         if (!streamList.getItems().isEmpty()) {
@@ -88,7 +94,23 @@ public class MainController implements Initializable {
             } else {
                 streamList.getSelectionModel().select(0);
             }
+            for (Stream s : streamList.getItems()) {
+//                if (!oldStreamList.contains(s)) {
+                Platform.runLater(() -> {
+                    Notifications.create()
+                            .title(s.getName() + " just went live!")
+                            .text(s.getStatus())
+                            .onAction(e -> launchLivestreamer(s.getUrl()))
+                            .hideAfter(Duration.seconds(3))
+                            .darkStyle()
+                            .show();
+                });
+
+//                }
+            }
         }
+
+
     }
 
     void streamLinkAction(ActionEvent event) {

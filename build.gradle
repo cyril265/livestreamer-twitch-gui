@@ -26,6 +26,7 @@ dependencies {
     compile 'ch.qos.logback:logback-classic:1.1.+'
     compile 'com.fasterxml.jackson.core:jackson-databind:2.4.+'
     compile 'org.apache.httpcomponents:fluent-hc:4.3.+'
+    compile  'org.controlsfx:controlsfx:8.0.6'
 
 }
 
