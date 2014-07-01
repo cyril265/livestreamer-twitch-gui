@@ -29,8 +29,12 @@
     -fx-cursor: hand;
 }
 
-.notification-bar > .pane .label {
-    -fx-font-size: 2px;
+/*.notification-bar {*/
+    /*-fx-font-size: 15px !important;*/
+/*}*/
+
+.notification-bar .label {
+    -fx-font-size: 12px !important;
 }
 
 /*.button {
