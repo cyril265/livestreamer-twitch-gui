@@ -96,16 +96,18 @@ public class MainController implements Initializable {
             } else {
                 streamList.getSelectionModel().select(0);
             }
-            for (Stream s : streamList.getItems()) {
-                if (!oldStreamList.contains(s)) {
-                    Notifications.create()
-                            .title(s.getName() + " just went live!")
-                            .text(s.getStatus())
-                            .onAction(e -> launchLivestreamer(s.getUrl()))
-                            .hideAfter(Duration.seconds(3))
-                            .darkStyle()
-                            .show();
+            if(!oldStreamList.isEmpty()) {
+                for (Stream s : streamList.getItems()) {
+                    if (!oldStreamList.contains(s)) {
+                        Notifications.create()
+                                .title(s.getName() + " just went live!")
+                                .text(s.getStatus())
+                                .onAction(e -> launchLivestreamer(s.getUrl()))
+                                .hideAfter(Duration.seconds(3))
+                                .darkStyle()
+                                .show();
 
+                    }
                 }
             }
         }
