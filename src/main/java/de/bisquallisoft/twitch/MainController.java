@@ -1,7 +1,6 @@
 package de.bisquallisoft.twitch;
 
 import javafx.application.Platform;
-import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -87,7 +86,7 @@ public class MainController implements Initializable {
 
     private void refreshStreams() {
         List<Stream> oldStreamList = new ArrayList<>();
-        FXCollections.copy(streamList.getItems(), oldStreamList);
+        streamList.getItems().forEach(oldStreamList::add);
         Stream selectedItem = streamList.getSelectionModel().getSelectedItem();
         streamList.getItems().setAll(api.getStreams());
         if (!streamList.getItems().isEmpty()) {
