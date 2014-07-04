@@ -7,6 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 import java.net.URL;
@@ -36,6 +37,11 @@ public class SettingsController implements Initializable {
 
     private void initializeUpdateInterval() {
         txtUpdateInterval.setText(settings.getUpdateInterval() + "");
+        txtUpdateInterval.addEventFilter(KeyEvent.KEY_TYPED, keyEvent -> {
+            if (!keyEvent.getCharacter().matches("[1-9]")) {
+                keyEvent.consume();
+            }
+        });
     }
 
     private void initializeQuality() {
