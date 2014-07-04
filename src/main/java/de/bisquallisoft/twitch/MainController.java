@@ -94,7 +94,7 @@ public class MainController implements Initializable {
             root = FXMLLoader.load(getClass().getResource("/settings.fxml"));
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setTitle("My New Stage Title");
+            stage.setTitle("Settings");
             stage.setScene(new Scene(root));
             stage.setResizable(false);
             stage.getScene().getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
