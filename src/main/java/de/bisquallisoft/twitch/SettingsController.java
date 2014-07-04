@@ -1,15 +1,16 @@
 package de.bisquallisoft.twitch;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+
+import java.net.URL;
+import java.util.ResourceBundle;
 
 public class SettingsController implements Initializable {
 
@@ -39,7 +40,7 @@ public class SettingsController implements Initializable {
 
     private void initializeQuality() {
         //todo: correct quality options
-        chcQuality.setItems(FXCollections.observableArrayList("best", "source", "shit"));
+        chcQuality.getItems().setAll("best", "source", "shit");
 
         String quality;
         if (settings.getQuality() != null) {
@@ -65,7 +66,7 @@ public class SettingsController implements Initializable {
         settings.setQuality(chcQuality.getSelectionModel().getSelectedItem());
 
         //stream online notification toggle
-        settings.setNotifications(chkNotifications.selectedProperty().get());
+        settings.setNotifications(chkNotifications.isSelected());
 
         //save to file
         settings.save();
