@@ -23,9 +23,9 @@ public class Settings {
     private final static ObjectMapper mapper = new ObjectMapper();
 
     private String authToken;
-    private int updateInterval;
-    private String quality;
-    private boolean notifications;
+    private int updateInterval = 3;
+    private String quality = "source";
+    private boolean notifications = true;
 
     static {
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
