@@ -23,6 +23,9 @@ public class Settings {
     private final static ObjectMapper mapper = new ObjectMapper();
 
     private String authToken;
+    private int updateInterval;
+    private String quality;
+    private boolean notifications;
 
     static {
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
@@ -59,6 +62,30 @@ public class Settings {
 
     public void setAuthToken(String authToken) {
         this.authToken = authToken;
+    }
+
+    public int getUpdateInterval() {
+        return updateInterval;
+    }
+
+    public void setUpdateInterval(int updateInterval) {
+        this.updateInterval = updateInterval;
+    }
+
+    public String getQuality() {
+        return quality;
+    }
+
+    public void setQuality(String quality) {
+        this.quality = quality;
+    }
+
+    public boolean isNotifications() {
+        return notifications;
+    }
+
+    public void setNotifications(boolean notifications) {
+        this.notifications = notifications;
     }
 
     public static Settings getInstance() {

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane hgap="5.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" pickOnBounds="false" prefHeight="200.0" prefWidth="250.0" vgap="5.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.bisquallisoft.twitch.SettingsController">
+  <columnConstraints>
+    <ColumnConstraints hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="100.0" />
+    <ColumnConstraints fillWidth="false" halignment="LEFT" hgrow="NEVER" maxWidth="175.0" minWidth="0.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" vgrow="NEVER" />
+    <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" vgrow="NEVER" />
+    <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" vgrow="NEVER" />
+      <RowConstraints maxHeight="82.0" minHeight="0.0" prefHeight="52.0" vgrow="ALWAYS" />
+  </rowConstraints>
+   <children>
+      <Label text="Update interval" GridPane.hgrow="SOMETIMES" />
+      <Label text="Stream quality" GridPane.rowIndex="1" />
+      <Label text="Notifications" GridPane.rowIndex="2" />
+      <TextField fx:id="txtUpdateInterval" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" />
+      <CheckBox fx:id="chkNotifications" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      <ChoiceBox fx:id="chcQuality" prefWidth="200.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" />
+      <HBox alignment="BOTTOM_RIGHT" nodeOrientation="LEFT_TO_RIGHT" spacing="10.0" GridPane.columnSpan="2" GridPane.rowIndex="3">
+         <children>
+            <Button fx:id="btnConfirm" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#confirmClicked" prefHeight="25.0" prefWidth="75.0" text="OK" />
+            <Button fx:id="btnCancel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#cancelClicked" prefHeight="25.0" prefWidth="75.0" text="Cancel" />
+         </children>
+      </HBox>
+   </children>
+   <padding>
+      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+   </padding>
+</GridPane>
