@@ -17,7 +17,7 @@ public class Settings {
 
     private static final Logger log = LoggerFactory.getLogger(Settings.class);
 
-    private static final Path USER_DIR;
+    private static final Path SETTINGS_DIR;
     private static final Path SETTINGS_FILE;
     private static Settings instance;
     private final static ObjectMapper mapper = new ObjectMapper();
@@ -30,17 +30,17 @@ public class Settings {
     static {
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
 
-        String settingsDir = System.getenv("LOCALAPPDATA");
-        if (settingsDir != null) {
-            USER_DIR = Paths.get(settingsDir, "Twitch");
-        } else if ((settingsDir = System.getenv("XDG_CONFIG_HOME")) != null) {
-            USER_DIR = Paths.get(settingsDir, "Twitch");
+        String userDir = System.getenv("LOCALAPPDATA");
+        if (userDir != null) {
+            SETTINGS_DIR = Paths.get(userDir, "Twitch");
+        } else if ((userDir = System.getenv("XDG_CONFIG_HOME")) != null) {
+            SETTINGS_DIR = Paths.get(userDir, "Twitch");
         } else {
-            USER_DIR = Paths.get("./");
+            SETTINGS_DIR = Paths.get("./");
         }
-        SETTINGS_FILE = USER_DIR.resolve("settings.conf");
+        SETTINGS_FILE = SETTINGS_DIR.resolve("settings.conf");
         try {
-            Files.createDirectories(USER_DIR);
+            Files.createDirectories(SETTINGS_DIR);
             try {
                 instance = mapper.readValue(SETTINGS_FILE.toFile(), Settings.class);
             } catch (IOException e) {
