@@ -50,6 +50,10 @@ public class Settings {
 
     }
 
+    private String quality = "source";
+    private Integer interval = 3;
+    private boolean notifications = true;
+
     private Settings() {
     }
 
@@ -71,5 +75,30 @@ public class Settings {
         } catch (IOException e) {
             log.error("error saving settings file", e);
         }
+    }
+
+    public void setQuality(String quality) {
+        this.quality = quality;
+    }
+
+    public String getQuality() {
+        return quality;
+    }
+
+
+    public Integer getInterval() {
+        return interval;
+    }
+
+    public void setInterval(Integer interval) {
+        this.interval = interval;
+    }
+
+    public void setNotifications(boolean notifications) {
+        this.notifications = notifications;
+    }
+
+    public boolean isNotifications() {
+        return notifications;
     }
 }

@@ -3,7 +3,9 @@ package de.bisquallisoft.twitch;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ProgressIndicator;
@@ -22,6 +24,7 @@ import org.controlsfx.control.Notifications;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -71,11 +74,8 @@ public class MainController implements Initializable {
                 setPreview(nv);
             }
         });
-        //refresh streams every 3 minutes
-        FxScheduler.schedule(Duration.minutes(1), () -> {
-            log.debug("refreshing streams");
-            refreshStreams();
-        });
+        //refresh streams periodically
+        FxScheduler.schedule(Duration.minutes(settings.getInterval()), this::refreshStreams);
 
         streamLink.setOnAction(this::streamLinkAction);
         Platform.runLater(streamList::requestFocus);
@@ -95,9 +95,17 @@ public class MainController implements Initializable {
             } else {
                 streamList.getSelectionModel().select(0);
             }
-            if(!oldStreamList.isEmpty()) {
-                for (Stream s : streamList.getItems()) {
-                    if (!oldStreamList.contains(s)) {
+            showNotifications(oldStreamList);
+        }
+
+
+    }
+
+    private void showNotifications(List<Stream> oldStreamList) {
+        if (!oldStreamList.isEmpty() && settings.isNotifications()) {
+            streamList.getItems().stream()
+                    .filter(s -> !oldStreamList.contains(s))
+                    .forEach(s -> {
                         Notifications.create()
                                 .title(s.getName() + " just went live!")
                                 .text(s.getStatus())
@@ -106,12 +114,8 @@ public class MainController implements Initializable {
                                 .darkStyle()
                                 .show();
 
-                    }
-                }
-            }
+                    });
         }
-
-
     }
 
     void streamLinkAction(ActionEvent event) {
@@ -151,13 +155,12 @@ public class MainController implements Initializable {
 
     private void launchLivestreamer(String url) {
         livestreamerProgess.setPrefHeight(imageParent.getHeight());
-        System.out.println("height:" + imageParent.getHeight() + " width:" + imageParent.getWidth());
         livestreamerProgess.setPrefWidth(imageParent.getWidth());
 
         livestreamerProgess.setVisible(true);
         livestreamerProgess.setProgress(-1);
         try {
-            new ProcessBuilder("livestreamer", url, "source").start();
+            new ProcessBuilder("livestreamer", url, settings.getQuality()).start();
         } catch (Exception e) {
             throw new RuntimeException("error executing livestreamer", e);
         }
@@ -174,7 +177,7 @@ public class MainController implements Initializable {
 
         Stage popup = new Stage();
         popup.setScene(new Scene((webView)));
-        popup.initModality(Modality.APPLICATION_MODAL);
+        popup.initModality(Modality.WINDOW_MODAL);
         popup.initOwner(parent);
 
         StringBuilder result = new StringBuilder();
@@ -191,5 +194,18 @@ public class MainController implements Initializable {
 
     void setPrimaryStage(Stage primaryStage) {
         this.primaryStage = primaryStage;
+    }
+
+    @FXML
+    public void btnOptionsPressed(ActionEvent actionEvent) throws IOException {
+        Parent popup = FXMLLoader.load(getClass().getResource("/options.fxml"));
+        Stage s = new Stage();
+        s.initModality(Modality.APPLICATION_MODAL);
+        s.initOwner(primaryStage);
+        s.setScene(new Scene(popup));
+        s.setResizable(false);
+        s.setWidth(0.3);
+
+        s.show();
     }
 }

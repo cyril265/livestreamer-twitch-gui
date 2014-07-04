@@ -1,26 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.scene.text.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-
-<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.bisquallisoft.twitch.MainController">
+<AnchorPane stylesheets="style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.bisquallisoft.twitch.MainController">
     <children>
         <SplitPane dividerPositions="0.2" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="500.0" prefWidth="850.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <items>
             <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" spacing="2.0" SplitPane.resizableWithParent="false">
                <children>
+                  <HBox>
+                     <children>
+                              <Button maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" mnemonicParsing="false" onAction="#refreshPressed" prefHeight="24.0" prefWidth="169.0" text="Refresh" VBox.vgrow="NEVER" />
+                        <Button fx:id="btnOptions" maxHeight="-Infinity" maxWidth="59.0" minHeight="-Infinity" mnemonicParsing="false" onAction="#btnOptionsPressed" prefHeight="24.0" prefWidth="59.0">
+                           <HBox.margin>
+                              <Insets left="5.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                  </HBox>
+                        <ListView fx:id="streamList" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" onMouseClicked="#streamListClicked" VBox.vgrow="ALWAYS" />
                         <TextField fx:id="streamLink" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="0.0" prefHeight="22.0" promptText="Open stream link" VBox.vgrow="NEVER">
                             <font>
                                 <Font size="12.0" />
                             </font>
                         </TextField>
-                        <ListView fx:id="streamList" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" onMouseClicked="#streamListClicked" VBox.vgrow="ALWAYS" />
-                        <Button maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" mnemonicParsing="false" onAction="#refreshPressed" prefHeight="24.0" text="Refresh" VBox.vgrow="NEVER" />
                </children>
                <padding>
                   <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
