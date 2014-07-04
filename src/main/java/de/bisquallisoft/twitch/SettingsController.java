@@ -41,19 +41,11 @@ public class SettingsController implements Initializable {
     private void initializeQuality() {
         //todo: correct quality options
         chcQuality.getItems().setAll("best", "source", "shit");
-
-        String quality;
-        if (settings.getQuality() != null) {
-            quality = settings.getQuality();
-        } else {
-            quality = "best";
-        }
-        chcQuality.getSelectionModel().select(quality);
+        chcQuality.getSelectionModel().select(settings.getQuality());
     }
 
     private void initializeNotification() {
-        boolean notificationToggle = settings.isNotifications();
-        chkNotifications.selectedProperty().set(notificationToggle);
+        chkNotifications.setSelected(settings.isNotifications());
     }
 
     @FXML
