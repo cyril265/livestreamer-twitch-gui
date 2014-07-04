@@ -1,10 +1,5 @@
 package de.bisquallisoft.twitch;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -28,6 +23,12 @@ import org.apache.commons.lang3.StringUtils;
 import org.controlsfx.control.Notifications;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
 
@@ -115,22 +116,25 @@ public class MainController implements Initializable {
             } else {
                 streamList.getSelectionModel().select(0);
             }
-            if (!oldStreamList.isEmpty() && settings.isNotifications()) {
-                for (Stream s : streamList.getItems()) {
-                    if (!oldStreamList.contains(s)) {
-                        Notifications.create()
-                                .title(s.getName() + " just went live!")
-                                .text(s.getStatus())
-                                .onAction(e -> launchLivestreamer(s.getUrl()))
-                                .hideAfter(Duration.seconds(3))
-                                .darkStyle()
-                                .show();
-
-                    }
-                }
-            }
+            showNotifications(oldStreamList);
         }
 
+    }
+
+    private void showNotifications(List<Stream> oldStreamList) {
+        if (!oldStreamList.isEmpty() && settings.isNotifications()) {
+
+            streamList.getItems().stream().filter(s -> !oldStreamList.contains(s)).forEach(s -> {
+                Notifications.create()
+                        .title(s.getName() + " just went live!")
+                        .text(s.getStatus())
+                        .onAction(e -> launchLivestreamer(s.getUrl()))
+                        .hideAfter(Duration.seconds(3))
+                        .darkStyle()
+                        .show();
+
+            });
+        }
     }
 
     void streamLinkAction(ActionEvent event) {
