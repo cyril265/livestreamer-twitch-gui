@@ -33,6 +33,7 @@ import java.util.ResourceBundle;
 public class MainController implements Initializable {
 
     private static final Logger log = LoggerFactory.getLogger(MainController.class);
+    public static final int NOTIFICATION_DURATION = 5;
 
     private Stage primaryStage;
 
@@ -74,7 +75,7 @@ public class MainController implements Initializable {
                 setPreview(nv);
             }
         });
-        //refresh streams every 3 minutes
+        //refresh streams periodically
         FxScheduler.schedule(Duration.minutes(settings.getUpdateInterval()), () -> {
             log.debug("refreshing streams");
             refreshStreams();
@@ -131,7 +132,7 @@ public class MainController implements Initializable {
                         .title(s.getName() + " just went live!")
                         .text(s.getStatus())
                         .onAction(e -> launchLivestreamer(s.getUrl()))
-                        .hideAfter(Duration.seconds(3))
+                        .hideAfter(Duration.seconds(NOTIFICATION_DURATION))
                         .darkStyle()
                         .show();
 
