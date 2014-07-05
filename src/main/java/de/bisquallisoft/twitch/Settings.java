@@ -1,7 +1,11 @@
 package de.bisquallisoft.twitch;
 
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.SerializerProvider;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import javafx.beans.property.SimpleIntegerProperty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,6 +28,7 @@ public class Settings {
     private final static ObjectMapper mapper = new ObjectMapper();
 
     private String authToken;
+    @JsonSerialize(using = IntegerPropertySerializer.class)
     private SimpleIntegerProperty updateInterval = new SimpleIntegerProperty(3);
     private String quality = "source";
     private boolean notifications = true;
@@ -57,7 +62,6 @@ public class Settings {
 
     private Settings() {
     }
-
 
     public String getAuthToken() {
         return authToken;
@@ -100,6 +104,12 @@ public class Settings {
             mapper.writeValue(SETTINGS_FILE.toFile(), this);
         } catch (IOException e) {
             log.error("error saving settings file", e);
+        }
+    }
+
+    static class IntegerPropertySerializer extends JsonSerializer<SimpleIntegerProperty> {
+        public void serialize(SimpleIntegerProperty value, JsonGenerator jgen, SerializerProvider provider) throws IOException {
+            jgen.writeNumber(value.intValue());
         }
     }
 }
