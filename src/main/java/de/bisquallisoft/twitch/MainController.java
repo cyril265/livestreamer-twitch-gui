@@ -95,7 +95,7 @@ public class MainController implements Initializable {
         });
 
         streamLink.setOnAction(this::streamLinkAction);
-        streamList.getItems().setAll(api.getStreams());
+        streamList.getItems().setAll(api.getFollowedStreams());
         if (!streamList.getItems().isEmpty()) {
             streamList.getSelectionModel().select(0);
         }
@@ -126,7 +126,7 @@ public class MainController implements Initializable {
         List<Stream> oldStreamList = new ArrayList<>();
         streamList.getItems().forEach(oldStreamList::add);
         Stream selectedItem = streamList.getSelectionModel().getSelectedItem();
-        streamList.getItems().setAll(api.getStreams());
+        streamList.getItems().setAll(api.getFollowedStreams());
         if (!streamList.getItems().isEmpty()) {
             if (selectedItem != null && streamList.getItems().contains(selectedItem)) {
                 streamList.getSelectionModel().select(selectedItem);

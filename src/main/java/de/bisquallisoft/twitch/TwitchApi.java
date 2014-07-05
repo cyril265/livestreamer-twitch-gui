@@ -25,7 +25,7 @@ public class TwitchApi {
         this.authToken = authToken;
     }
 
-    public List<Stream> getStreams() {
+    public List<Stream> getFollowedStreams() {
         try {
             String response = Request.Get("https://api.twitch.tv/kraken/streams/followed?limit=100")
                     .addHeader("Accept", "application/vnd.twitchtv.v3+json")
