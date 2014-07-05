@@ -81,9 +81,12 @@ public class MainController implements Initializable {
         });
 
         streamLink.setOnAction(this::streamLinkAction);
-        Platform.runLater(streamList::requestFocus);
-        refreshStreams();
 
+        streamList.getItems().setAll(api.getStreams());
+        if (!streamList.getItems().isEmpty()) {
+            streamList.getSelectionModel().select(0);
+        }
+        Platform.runLater(streamList::requestFocus);
     }
 
     @FXML
@@ -122,8 +125,7 @@ public class MainController implements Initializable {
     }
 
     private void showNotifications(List<Stream> oldStreamList) {
-        if (!oldStreamList.isEmpty() && settings.isNotifications()) {
-
+        if (settings.isNotifications()) {
             streamList.getItems().stream().filter(s -> !oldStreamList.contains(s)).forEach(s -> {
                 Notifications.create()
                         .title(s.getName() + " just went live!")
