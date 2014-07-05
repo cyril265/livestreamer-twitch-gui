@@ -101,7 +101,6 @@ public class MainController implements Initializable {
             stage.setTitle("Settings");
             stage.setScene(new Scene(root));
             stage.setResizable(false);
-            stage.getScene().getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
             stage.show();
 
         } catch (IOException e) {
