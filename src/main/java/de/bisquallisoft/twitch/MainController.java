@@ -13,6 +13,8 @@ import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -151,6 +153,11 @@ public class MainController implements Initializable {
     void previewClicked(MouseEvent event) {
         if(event.getButton() == MouseButton.PRIMARY) {
             launchLivestreamer(streamList.getSelectionModel().getSelectedItem().getUrl());
+        } else if (event.getButton() == MouseButton.SECONDARY) {
+            final Clipboard clipboard = Clipboard.getSystemClipboard();
+            final ClipboardContent content = new ClipboardContent();
+            content.putString(streamList.getSelectionModel().getSelectedItem().getUrl());
+            clipboard.setContent(content);
         }
     }
 
