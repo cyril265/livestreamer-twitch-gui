@@ -29,9 +29,10 @@
     -fx-cursor: hand;
 }
 
-/*.notification-bar {*/
-    /*-fx-font-size: 15px !important;*/
-/*}*/
+.button:default {
+    -fx-base: rgb(50, 50, 50);
+}
+
 
 .notification-bar .label {
     -fx-font-size: 12px !important;
