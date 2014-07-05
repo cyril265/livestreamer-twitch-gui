@@ -38,7 +38,7 @@ public class SettingsController implements Initializable {
     private void initializeUpdateInterval() {
         txtUpdateInterval.setText(settings.getUpdateInterval() + "");
         txtUpdateInterval.addEventFilter(KeyEvent.KEY_TYPED, keyEvent -> {
-            if (!keyEvent.getCharacter().matches("[1-9]")) {
+            if (!keyEvent.getCharacter().matches("[0-9]")) {
                 keyEvent.consume();
             }
         });
