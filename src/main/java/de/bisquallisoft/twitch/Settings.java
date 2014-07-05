@@ -2,6 +2,7 @@ package de.bisquallisoft.twitch;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import javafx.beans.property.SimpleIntegerProperty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,7 +24,7 @@ public class Settings {
     private final static ObjectMapper mapper = new ObjectMapper();
 
     private String authToken;
-    private int updateInterval = 3;
+    private SimpleIntegerProperty updateInterval = new SimpleIntegerProperty(3);
     private String quality = "source";
     private boolean notifications = true;
 
@@ -53,8 +54,10 @@ public class Settings {
 
     }
 
+
     private Settings() {
     }
+
 
     public String getAuthToken() {
         return authToken;
@@ -64,12 +67,12 @@ public class Settings {
         this.authToken = authToken;
     }
 
-    public int getUpdateInterval() {
+    public SimpleIntegerProperty getUpdateInterval() {
         return updateInterval;
     }
 
     public void setUpdateInterval(int updateInterval) {
-        this.updateInterval = updateInterval;
+        this.updateInterval.set(updateInterval);
     }
 
     public String getQuality() {

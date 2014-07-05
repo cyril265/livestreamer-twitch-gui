@@ -33,7 +33,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-import javafx.scene.Node;
 
 public class MainController implements Initializable {
 
@@ -85,14 +84,17 @@ public class MainController implements Initializable {
                 setPreview(nv);
             }
         });
+
         //refresh streams periodically
-        scheduledRefresh = FxScheduler.schedule(Duration.minutes(settings.getUpdateInterval()), () -> {
-            log.debug("refreshing streams");
-            refreshStreams();
+        scheduledRefresh = FxScheduler.schedule(Duration.minutes(settings.getUpdateInterval().get()), this::refreshStreams);
+
+        //add handler to reschedule stream refreshing when interval changes
+        settings.getUpdateInterval().addListener((observableValue, ov, nv) -> {
+            scheduledRefresh.stop();
+            scheduledRefresh = FxScheduler.schedule(Duration.minutes(nv.doubleValue()), this::refreshStreams);
         });
 
         streamLink.setOnAction(this::streamLinkAction);
-
         streamList.getItems().setAll(api.getStreams());
         if (!streamList.getItems().isEmpty()) {
             streamList.getSelectionModel().select(0);
@@ -119,6 +121,8 @@ public class MainController implements Initializable {
     }
 
     private void refreshStreams() {
+        log.debug("refreshing streams");
+
         List<Stream> oldStreamList = new ArrayList<>();
         streamList.getItems().forEach(oldStreamList::add);
         Stream selectedItem = streamList.getSelectionModel().getSelectedItem();
