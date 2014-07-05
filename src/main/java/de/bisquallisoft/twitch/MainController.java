@@ -12,6 +12,7 @@ import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.web.WebView;
@@ -146,7 +147,9 @@ public class MainController implements Initializable {
 
     @FXML
     void previewClicked(MouseEvent event) {
-        launchLivestreamer(streamList.getSelectionModel().getSelectedItem().getUrl());
+        if(event.getButton() == MouseButton.PRIMARY) {
+            launchLivestreamer(streamList.getSelectionModel().getSelectedItem().getUrl());
+        }
     }
 
     @FXML
