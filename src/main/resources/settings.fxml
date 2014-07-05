@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
-<?import javafx.geometry.*?>
-<?import java.lang.*?>
 <?import javafx.scene.layout.*?>
-
 <GridPane hgap="5.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" pickOnBounds="false" prefHeight="200.0" prefWidth="250.0" vgap="5.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.bisquallisoft.twitch.SettingsController">
   <columnConstraints>
     <ColumnConstraints hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="100.0" />
@@ -25,8 +23,8 @@
       <ChoiceBox fx:id="chcQuality" prefWidth="200.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" />
       <HBox alignment="BOTTOM_RIGHT" nodeOrientation="LEFT_TO_RIGHT" spacing="10.0" GridPane.columnSpan="2" GridPane.rowIndex="3">
          <children>
-            <Button fx:id="btnConfirm" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#confirmClicked" prefHeight="25.0" prefWidth="75.0" text="OK" />
-            <Button fx:id="btnCancel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#cancelClicked" prefHeight="25.0" prefWidth="75.0" text="Cancel" />
+            <Button defaultButton="true" fx:id="btnConfirm" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#confirmClicked" prefHeight="25.0" prefWidth="75.0" text="OK" />
+            <Button cancelButton="true" fx:id="btnCancel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#cancelClicked" prefHeight="25.0" prefWidth="75.0" text="Cancel" />
          </children>
       </HBox>
    </children>
