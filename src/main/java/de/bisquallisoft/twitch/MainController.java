@@ -1,5 +1,6 @@
 package de.bisquallisoft.twitch;
 
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -57,6 +58,7 @@ public class MainController implements Initializable {
 
     private TwitchApi api;
     private Settings settings = Settings.getInstance();
+    private Timeline scheduledRefresh;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -77,7 +79,7 @@ public class MainController implements Initializable {
             }
         });
         //refresh streams periodically
-        FxScheduler.schedule(Duration.minutes(settings.getUpdateInterval()), () -> {
+        scheduledRefresh = FxScheduler.schedule(Duration.minutes(settings.getUpdateInterval()), () -> {
             log.debug("refreshing streams");
             refreshStreams();
         });
@@ -155,7 +157,7 @@ public class MainController implements Initializable {
     @FXML
     void streamListClicked(MouseEvent event) {
         Stream selectedItem = streamList.getSelectionModel().getSelectedItem();
-        if (selectedItem != null && event.getClickCount() == 2) {
+        if (selectedItem != null && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
             launchLivestreamer(selectedItem.getUrl());
         }
     }

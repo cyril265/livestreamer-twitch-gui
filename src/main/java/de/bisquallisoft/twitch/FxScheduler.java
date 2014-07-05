@@ -7,17 +7,19 @@ import javafx.util.Duration;
 
 public class FxScheduler {
 
-    public static void schedule(Duration period, Runnable task) {
+    public static Timeline schedule(Duration period, Runnable task) {
         KeyFrame kf = new KeyFrame(period, event -> task.run());
         Timeline timeline = new Timeline(kf);
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
+        return timeline;
     }
 
-    public static void scheduleOnce(Duration waitTime, Runnable task) {
+    public static Timeline scheduleOnce(Duration waitTime, Runnable task) {
         KeyFrame kf = new KeyFrame(waitTime, event -> task.run());
         Timeline timeline = new Timeline(kf);
         timeline.play();
+        return timeline;
     }
 
     public static void runAsync(Runnable task) {
