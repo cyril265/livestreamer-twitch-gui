@@ -33,6 +33,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.scene.Node;
 
 public class MainController implements Initializable {
 
@@ -131,15 +132,20 @@ public class MainController implements Initializable {
 
     private void showNotifications(List<Stream> oldStreamList) {
         if (settings.isNotifications()) {
-            streamList.getItems().stream().filter(s -> !oldStreamList.contains(s)).forEach(s -> {
+            streamList.getItems().stream().forEach(s -> {
+
+                ImageView img = new ImageView(s.getLogo());
+                img.setFitHeight(60.0);
+                img.setFitWidth(60.0);
+
                 Notifications.create()
                         .title(s.getName() + " just went live!")
                         .text(s.getStatus())
+                        .graphic(img)
                         .onAction(e -> launchLivestreamer(s.getUrl()))
                         .hideAfter(Duration.seconds(NOTIFICATION_DURATION))
                         .darkStyle()
                         .show();
-
             });
         }
     }
@@ -151,7 +157,7 @@ public class MainController implements Initializable {
 
     @FXML
     void previewClicked(MouseEvent event) {
-        if(event.getButton() == MouseButton.PRIMARY) {
+        if (event.getButton() == MouseButton.PRIMARY) {
             launchLivestreamer(streamList.getSelectionModel().getSelectedItem().getUrl());
         } else if (event.getButton() == MouseButton.SECONDARY) {
             final Clipboard clipboard = Clipboard.getSystemClipboard();

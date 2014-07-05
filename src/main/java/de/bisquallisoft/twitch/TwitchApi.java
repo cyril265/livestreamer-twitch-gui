@@ -40,13 +40,15 @@ public class TwitchApi {
             return resource.getStreams().stream()
                     .map(s -> {
                         Stream stream = new Stream();
-                        stream.setName(s.getChannel().getName());
+                        stream.setName(s.getChannel().getDisplay_name());
                         stream.setUrl(s.getChannel().getUrl());
                         stream.setViewers(s.getViewers());
                         stream.setPreviewImage(s.getPreview().getLarge());
                         stream.setStatus(s.getChannel().getStatus());
                         stream.setGame(s.getChannel().getGame());
                         stream.setLastUpdateTime(s.getChannel().getUpdated_at());
+                        stream.setLogo(s.getChannel().getLogo());
+
                         return stream;
                     })
                     .collect(Collectors.toList());

@@ -12,7 +12,8 @@ public class Stream {
     private String status;
     private String game;
     private String lastUpdateTime;
-
+    private String logo;
+    
     public String getPreviewImage() {
         return previewImage;
     }
@@ -74,6 +75,16 @@ public class Stream {
         return name + " [" + viewers + "]";
     }
 
+    public String getLogo() {
+        return logo;
+    }
+
+    public void setLogo(String logo) {
+        this.logo = logo;
+    }
+
+    
+    
     @Override
     public boolean equals(Object o) {
         if (this == o) {
