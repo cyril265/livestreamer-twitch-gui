@@ -132,7 +132,7 @@ public class MainController implements Initializable {
 
     private void showNotifications(List<Stream> oldStreamList) {
         if (settings.isNotifications()) {
-            streamList.getItems().stream().forEach(s -> {
+            streamList.getItems().stream().filter(s -> !oldStreamList.contains(s)).forEach(s -> {
 
                 ImageView img = new ImageView(s.getLogo());
                 img.setFitHeight(60.0);
