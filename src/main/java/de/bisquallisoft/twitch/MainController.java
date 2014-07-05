@@ -159,7 +159,12 @@ public class MainController implements Initializable {
     }
 
     void streamLinkAction(ActionEvent event) {
-        launchLivestreamer(streamLink.getText());
+        String text = streamLink.getText();
+        if(text.startsWith("http") || text.startsWith("www") | text.startsWith("twitch")) {
+            launchLivestreamer(text);
+        } else {
+            launchLivestreamer("twitch.tv/" + text);
+        }
         streamLink.setText("");
     }
 
