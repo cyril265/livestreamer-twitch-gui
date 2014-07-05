@@ -58,6 +58,10 @@ public class MainController implements Initializable {
     private Pane imageParent;
     @FXML
     private TextField txtGame;
+    @FXML
+    private ImageView imgLogo;
+    @FXML
+    private TextField txtStreamName;
 
     private TwitchApi api;
     private Settings settings = Settings.getInstance();
@@ -181,6 +185,8 @@ public class MainController implements Initializable {
             Platform.runLater(() -> previewImage.setImage(img));
         });
 
+        imgLogo.setImage(new Image(stream.getLogo()));
+        txtStreamName.setText(stream.getName());
         txtStreamStatus.setText(stream.getStatus());
         txtViewers.setText(stream.getViewers() + "");
         txtGame.setText(stream.getGame());
