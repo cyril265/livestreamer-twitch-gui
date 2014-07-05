@@ -45,8 +45,7 @@ public class SettingsController implements Initializable {
     }
 
     private void initializeQuality() {
-        //todo: correct quality options
-        chcQuality.getItems().setAll("best", "source", "high", "medium", "low", "mobile");
+        chcQuality.getItems().setAll("source", "high", "medium", "low", "mobile");
         chcQuality.getSelectionModel().select(settings.getQuality());
     }
 

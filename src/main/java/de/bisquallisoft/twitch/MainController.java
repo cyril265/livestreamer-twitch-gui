@@ -175,7 +175,6 @@ public class MainController implements Initializable {
 
     private void launchLivestreamer(String url) {
         livestreamerProgess.setPrefHeight(imageParent.getHeight());
-        System.out.println("height:" + imageParent.getHeight() + " width:" + imageParent.getWidth());
         livestreamerProgess.setPrefWidth(imageParent.getWidth());
 
         livestreamerProgess.setVisible(true);
