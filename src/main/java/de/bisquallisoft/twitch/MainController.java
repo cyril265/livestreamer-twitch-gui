@@ -211,10 +211,16 @@ public class MainController implements Initializable {
         livestreamerProgess.setPrefHeight(imageParent.getHeight());
         livestreamerProgess.setPrefWidth(imageParent.getWidth());
 
-        livestreamerProgess.setVisible(true);
-        livestreamerProgess.setProgress(-1);
+
         try {
             new ProcessBuilder("livestreamer", url, settings.getQuality()).start();
+            livestreamerProgess.setVisible(true);
+            livestreamerProgess.setProgress(-1);
+
+            FxScheduler.scheduleOnce(Duration.seconds(6), () -> {
+                livestreamerProgess.setProgress(1);
+                livestreamerProgess.setVisible(false);
+            });
         } catch (IOException e) {
             Dialogs.create()
                     .owner(primaryStage)
@@ -223,10 +229,7 @@ public class MainController implements Initializable {
                     .showError();
         }
 
-        FxScheduler.scheduleOnce(Duration.seconds(6), () -> {
-            livestreamerProgess.setProgress(1);
-            livestreamerProgess.setVisible(false);
-        });
+
     }
 
     private String authenticate(Window parent) {
