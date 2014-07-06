@@ -25,6 +25,7 @@ import javafx.stage.Window;
 import javafx.util.Duration;
 import org.apache.commons.lang3.StringUtils;
 import org.controlsfx.control.Notifications;
+import org.controlsfx.dialog.Dialogs;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -214,8 +215,12 @@ public class MainController implements Initializable {
         livestreamerProgess.setProgress(-1);
         try {
             new ProcessBuilder("livestreamer", url, settings.getQuality()).start();
-        } catch (Exception e) {
-            throw new RuntimeException("error executing livestreamer", e);
+        } catch (IOException e) {
+            Dialogs.create()
+                    .owner(primaryStage)
+                    .title("Livestreamer is not in path")
+                    .message("Please install livestreamer: livestreamer.readthedocs.org")
+                    .showError();
         }
 
         FxScheduler.scheduleOnce(Duration.seconds(6), () -> {
