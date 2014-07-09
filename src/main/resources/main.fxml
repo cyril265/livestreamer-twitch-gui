@@ -46,7 +46,7 @@
                         <ImageView fx:id="imgLogo" fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" />
                         <VBox alignment="CENTER" HBox.hgrow="ALWAYS">
                            <children>
-                                    <TextField fx:id="txtStreamStatus" editable="false" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="35.0" snapToPixel="false" text="MggggMM">
+                                    <TextField fx:id="txtStreamStatus" editable="false" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="35.0" snapToPixel="false">
                                  <font>
                                     <Font name="System Bold" size="19.0" />
                                  </font>
@@ -57,7 +57,7 @@
                                     <Insets />
                                  </VBox.margin>
                                     </TextField>
-                              <TextField fx:id="txtStreamName" editable="false" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="0.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="25.0" text="MggggMM">
+                              <TextField fx:id="txtStreamName" editable="false" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="0.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="25.0">
                                  <font>
                                     <Font size="13.0" />
                                  </font>
@@ -68,7 +68,7 @@
                         </VBox>
                      </children>
                   </HBox>
-                        <Pane fx:id="imageParent" VBox.vgrow="ALWAYS">
+                        <Pane fx:id="imageParent" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" VBox.vgrow="ALWAYS">
                             <children>
                                 <ImageView fx:id="previewImage" onMouseClicked="#previewClicked" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;" />
                                 <ProgressIndicator fx:id="livestreamerProgess" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" progress="0.0" visible="false" />
