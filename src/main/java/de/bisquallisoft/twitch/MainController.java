@@ -87,10 +87,10 @@ public class MainController implements Initializable {
         });
 
         //refresh streams periodically
-        scheduledRefresh = FxScheduler.schedule(Duration.minutes(settings.getUpdateInterval().get()), this::refreshStreams);
+        scheduledRefresh = FxScheduler.schedule(Duration.minutes(settings.getUpdateInterval()), this::refreshStreams);
 
         //add handler to reschedule stream refreshing when interval changes
-        settings.getUpdateInterval().addListener((observableValue, ov, nv) -> {
+        settings.updateIntervalProperty().addListener((observableValue, ov, nv) -> {
             scheduledRefresh.stop();
             scheduledRefresh = FxScheduler.schedule(Duration.minutes(nv.doubleValue()), this::refreshStreams);
         });
