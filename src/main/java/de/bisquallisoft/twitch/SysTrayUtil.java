@@ -45,16 +45,6 @@ public class SysTrayUtil {
 
         initTrayIcon(primaryStage, popup);
 
-        //handle settings changed
-//        Settings.getInstance().minimizeToTrayProperty().addListener((observableValue, ov, minimizeToTray) -> {
-//            log.debug("minimizeToTray {}", minimizeToTray);
-//            if (minimizeToTray) {
-//                showInTray();
-//            } else {
-//                removeFromTray();
-//            }
-//        });
-
         //handle minimize/restore
         primaryStage.iconifiedProperty().addListener((observableValue, aBoolean, minimize) -> {
             if (Settings.getInstance().getMinimizeToTray()) {
@@ -72,6 +62,7 @@ public class SysTrayUtil {
         //javafx sucks
         x = primaryStage.getX();
         y = primaryStage.getY();
+
         primaryStage.xProperty().addListener((observableValue, number, newValue) -> {
             if(newValue.doubleValue() > -30000 && newValue.intValue() != 8)
                 x = newValue.doubleValue();
