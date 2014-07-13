@@ -146,8 +146,8 @@ public class MainController implements Initializable {
             streamList.getItems().stream().filter(s -> !oldStreamList.contains(s)).forEach(s -> {
 
                 ImageView img = new ImageView(s.getLogo());
-                img.setFitHeight(60.0);
-                img.setFitWidth(60.0);
+                img.setFitHeight(40.0);
+                img.setFitWidth(40.0);
 
                 Notifications.create()
                         .title(s.getName() + " just went live!")

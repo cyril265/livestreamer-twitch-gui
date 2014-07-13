@@ -65,7 +65,7 @@
                         </VBox>
                      </children>
                   </HBox>
-                        <Pane fx:id="imageParent" VBox.vgrow="ALWAYS">
+                        <Pane fx:id="imageParent" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" VBox.vgrow="ALWAYS">
                             <children>
                                 <ImageView fx:id="previewImage" onMouseClicked="#previewClicked" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;" />
                                 <ProgressIndicator fx:id="livestreamerProgess" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" progress="0.0" visible="false" />
