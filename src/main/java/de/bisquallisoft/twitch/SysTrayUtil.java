@@ -18,6 +18,8 @@ public class SysTrayUtil {
     private Stage primaryStage;
     private TrayIcon trayIcon;
     private SystemTray tray;
+    private double y;
+    private double x;
 
     public SysTrayUtil(Stage primaryStage) {
         this.primaryStage = primaryStage;
@@ -47,7 +49,10 @@ public class SysTrayUtil {
 
         trayIcon.setPopupMenu(popup);
         trayIcon.addActionListener(e -> {
-            Platform.runLater(primaryStage::show);
+            Platform.runLater(() -> {
+                primaryStage.setIconified(false);
+                primaryStage.show();
+            });
             log.debug("showing primary stage");
         });
 
@@ -64,6 +69,12 @@ public class SysTrayUtil {
             if(Settings.getInstance().getMinimizeToTray()) {
                 if(isIconified) {
                     primaryStage.hide();
+                    primaryStage.setX(x);
+                    primaryStage.setY(y);
+                    primaryStage.toFront();
+                } else {
+                    x = primaryStage.getScene().getWindow().getX();
+                    y = primaryStage.getScene().getWindow().getY();
                 }
             }
         });
