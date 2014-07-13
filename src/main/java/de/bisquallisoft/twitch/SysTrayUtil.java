@@ -30,7 +30,6 @@ public class SysTrayUtil {
             return;
         }
 
-        Platform.setImplicitExit(false);
         URL resource = SysTrayUtil.class.getResource("/app-icon.png");
         final PopupMenu popup = new PopupMenu();
         trayIcon = new TrayIcon(Toolkit.getDefaultToolkit().getImage(resource));
@@ -39,13 +38,14 @@ public class SysTrayUtil {
 
         // Create a pop-up menu components
         MenuItem exitItem = new MenuItem("Exit");
+
+        //Add components to pop-up menu
+        popup.add(exitItem);
+
         exitItem.addActionListener(e -> {
             Platform.exit();
             System.exit(0);
         });
-
-        //Add components to pop-up menu
-        popup.add(exitItem);
 
         trayIcon.setPopupMenu(popup);
         trayIcon.addActionListener(e -> {
@@ -66,17 +66,26 @@ public class SysTrayUtil {
         });
 
         primaryStage.iconifiedProperty().addListener((observableValue, aBoolean, isIconified) -> {
-            if(Settings.getInstance().getMinimizeToTray()) {
-                if(isIconified) {
+            if (Settings.getInstance().getMinimizeToTray()) {
+                if (isIconified) {
                     primaryStage.hide();
                     primaryStage.setX(x);
                     primaryStage.setY(y);
                     primaryStage.toFront();
-                } else {
-                    x = primaryStage.getScene().getWindow().getX();
-                    y = primaryStage.getScene().getWindow().getY();
                 }
             }
+        });
+
+        //javafx sucks
+        primaryStage.xProperty().addListener((observableValue, number, newValue) -> {
+            log.info("" + newValue.doubleValue());
+            if(newValue.doubleValue() > -30000 && newValue.intValue() != 8)
+                x = newValue.doubleValue();
+        });
+
+        primaryStage.yProperty().addListener((observableValue, number, newValue) -> {
+            if(newValue.doubleValue() > -30000 && newValue.intValue() != 32)
+                y = newValue.doubleValue();
         });
     }
 
