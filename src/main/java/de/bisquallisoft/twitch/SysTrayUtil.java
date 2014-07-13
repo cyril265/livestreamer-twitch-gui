@@ -28,10 +28,8 @@ public class SysTrayUtil {
             return;
         }
 
-        URL resource = SysTrayUtil.class.getResource("/app-icon.png");
         final PopupMenu popup = new PopupMenu();
-        trayIcon = new TrayIcon(Toolkit.getDefaultToolkit().getImage(resource));
-        trayIcon.setImageAutoSize(true);
+
         tray = SystemTray.getSystemTray();
 
         // Create a pop-up menu components
@@ -45,34 +43,28 @@ public class SysTrayUtil {
             System.exit(0);
         });
 
-        trayIcon.setPopupMenu(popup);
-        trayIcon.addActionListener(e -> {
-            Platform.runLater(() -> {
-                primaryStage.setIconified(false);
-                primaryStage.show();
-            });
-            log.debug("showing primary stage");
-        });
+        initTrayIcon(primaryStage, popup);
 
         //handle settings changed
-        Settings.getInstance().minimizeToTrayProperty().addListener((observableValue, ov, minimizeToTray) -> {
-            log.debug("minimizeToTray {}", minimizeToTray);
-            if (minimizeToTray) {
-                showInTray();
-            } else {
-                removeFromTray();
-            }
-        });
+//        Settings.getInstance().minimizeToTrayProperty().addListener((observableValue, ov, minimizeToTray) -> {
+//            log.debug("minimizeToTray {}", minimizeToTray);
+//            if (minimizeToTray) {
+//                showInTray();
+//            } else {
+//                removeFromTray();
+//            }
+//        });
 
         //handle minimize/restore
         primaryStage.iconifiedProperty().addListener((observableValue, aBoolean, minimize) -> {
             if (Settings.getInstance().getMinimizeToTray()) {
                 if (minimize) {
                     primaryStage.close();
-                    primaryStage.toFront();
+                    showInTray();
                 } else {
                     primaryStage.setX(x);
                     primaryStage.setY(y);
+                    removeFromTray();
                 }
             }
         });
@@ -92,6 +84,19 @@ public class SysTrayUtil {
 
     }
 
+    private void initTrayIcon(Stage primaryStage, PopupMenu popup) {
+        URL resource = SysTrayUtil.class.getResource("/app-icon.png");
+        trayIcon = new TrayIcon(Toolkit.getDefaultToolkit().getImage(resource));
+        trayIcon.setImageAutoSize(true);
+        trayIcon.setPopupMenu(popup);
+        trayIcon.addActionListener(e -> {
+            Platform.runLater(() -> {
+                primaryStage.setIconified(false);
+                primaryStage.show();
+            });
+            log.debug("showing primary stage");
+        });
+    }
 
 
     void showInTray() {

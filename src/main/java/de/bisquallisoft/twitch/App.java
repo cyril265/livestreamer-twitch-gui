@@ -32,9 +32,6 @@ public class App extends Application {
         primaryStage.show();
 
         SysTrayUtil tray = new SysTrayUtil(primaryStage);
-        if (Settings.getInstance().getMinimizeToTray()) {
-            tray.showInTray();
-        }
         primaryStage.setOnCloseRequest(e ->  {
             Platform.exit();
             System.exit(0);
