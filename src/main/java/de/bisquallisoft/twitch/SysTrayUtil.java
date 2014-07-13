@@ -15,14 +15,12 @@ public class SysTrayUtil {
     private static final Logger log = LoggerFactory.getLogger(SysTrayUtil.class);
 
 
-    private Stage primaryStage;
     private TrayIcon trayIcon;
     private SystemTray tray;
     private double y;
     private double x;
 
     public SysTrayUtil(Stage primaryStage) {
-        this.primaryStage = primaryStage;
         log.debug("primarystage: {}", primaryStage);
 
         if (!SystemTray.isSupported()) {
@@ -56,6 +54,7 @@ public class SysTrayUtil {
             log.debug("showing primary stage");
         });
 
+        //handle settings changed
         Settings.getInstance().minimizeToTrayProperty().addListener((observableValue, ov, minimizeToTray) -> {
             log.debug("minimizeToTray {}", minimizeToTray);
             if (minimizeToTray) {
@@ -65,20 +64,23 @@ public class SysTrayUtil {
             }
         });
 
-        primaryStage.iconifiedProperty().addListener((observableValue, aBoolean, isIconified) -> {
+        //handle minimize/restore
+        primaryStage.iconifiedProperty().addListener((observableValue, aBoolean, minimize) -> {
             if (Settings.getInstance().getMinimizeToTray()) {
-                if (isIconified) {
-                    primaryStage.hide();
+                if (minimize) {
+                    primaryStage.close();
+                    primaryStage.toFront();
+                } else {
                     primaryStage.setX(x);
                     primaryStage.setY(y);
-                    primaryStage.toFront();
                 }
             }
         });
 
         //javafx sucks
+        x = primaryStage.getX();
+        y = primaryStage.getY();
         primaryStage.xProperty().addListener((observableValue, number, newValue) -> {
-            log.info("" + newValue.doubleValue());
             if(newValue.doubleValue() > -30000 && newValue.intValue() != 8)
                 x = newValue.doubleValue();
         });
@@ -87,6 +89,7 @@ public class SysTrayUtil {
             if(newValue.doubleValue() > -30000 && newValue.intValue() != 32)
                 y = newValue.doubleValue();
         });
+
     }
 
 
