@@ -24,6 +24,8 @@ public class SettingsController implements Initializable {
     @FXML
     private CheckBox chkNotifications;
     @FXML
+    public CheckBox chkMinimizeToTray;
+    @FXML
     private Button btnConfirm;
     @FXML
     private Button btnCancel;
@@ -33,6 +35,7 @@ public class SettingsController implements Initializable {
         initializeUpdateInterval();
         initializeQuality();
         initializeNotification();
+        chkMinimizeToTray.setSelected(settings.getMinimizeToTray());
     }
 
     private void initializeUpdateInterval() {
@@ -65,6 +68,8 @@ public class SettingsController implements Initializable {
         //stream online notification toggle
         settings.setNotifications(chkNotifications.isSelected());
 
+        settings.setMinimizeToTray(chkMinimizeToTray.isSelected());
+
         //save to file
         settings.save();
 
@@ -80,4 +85,5 @@ public class SettingsController implements Initializable {
         Stage stage = (Stage) btnCancel.getScene().getWindow();
         stage.close();
     }
+
 }

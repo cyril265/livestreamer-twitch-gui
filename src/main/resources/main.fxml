@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.scene.text.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-
 <AnchorPane stylesheets="style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.bisquallisoft.twitch.MainController">
     <children>
         <SplitPane dividerPositions="0.2" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="500.0" prefWidth="820.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -46,7 +43,7 @@
                         <ImageView fx:id="imgLogo" fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" />
                         <VBox alignment="CENTER" HBox.hgrow="ALWAYS">
                            <children>
-                                    <TextField fx:id="txtStreamStatus" editable="false" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="35.0" snapToPixel="false" text="MggggMM">
+                                    <TextField fx:id="txtStreamStatus" editable="false" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" nodeOrientation="LEFT_TO_RIGHT" prefHeight="35.0" snapToPixel="false">
                                  <font>
                                     <Font name="System Bold" size="19.0" />
                                  </font>
@@ -57,7 +54,7 @@
                                     <Insets />
                                  </VBox.margin>
                                     </TextField>
-                              <TextField fx:id="txtStreamName" editable="false" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="0.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="25.0" text="MggggMM">
+                              <TextField fx:id="txtStreamName" editable="false" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="0.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="25.0">
                                  <font>
                                     <Font size="13.0" />
                                  </font>

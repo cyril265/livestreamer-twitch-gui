@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.SerializerProvider;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,6 +31,7 @@ public class Settings {
     private SimpleIntegerProperty updateInterval = new SimpleIntegerProperty(3);
     private String quality = "source";
     private boolean notifications = true;
+    private SimpleBooleanProperty minimizeToTray = new SimpleBooleanProperty(true);
 
     static {
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
@@ -99,6 +101,19 @@ public class Settings {
 
     public static Settings getInstance() {
         return instance;
+    }
+
+
+    public boolean getMinimizeToTray() {
+        return minimizeToTray.get();
+    }
+
+    public SimpleBooleanProperty minimizeToTrayProperty() {
+        return minimizeToTray;
+    }
+
+    public void setMinimizeToTray(boolean minimizeToTray) {
+        this.minimizeToTray.set(minimizeToTray);
     }
 
     public void save() {

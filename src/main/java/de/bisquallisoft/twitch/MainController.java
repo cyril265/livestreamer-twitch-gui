@@ -21,6 +21,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.web.WebView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.stage.Window;
 import javafx.util.Duration;
 import org.apache.commons.lang3.StringUtils;
@@ -111,6 +112,7 @@ public class MainController implements Initializable {
             root = FXMLLoader.load(getClass().getResource("/settings.fxml"));
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initStyle(StageStyle.UTILITY);
             stage.setTitle("Settings");
             stage.setScene(new Scene(root));
             stage.setResizable(false);

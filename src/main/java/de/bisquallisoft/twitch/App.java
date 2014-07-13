@@ -1,6 +1,7 @@
 package de.bisquallisoft.twitch;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -29,7 +30,17 @@ public class App extends Application {
 
         primaryStage.getIcons().add(new Image("/app-icon.png"));
         primaryStage.show();
+
+        SysTrayUtil tray = new SysTrayUtil(primaryStage);
+        if (Settings.getInstance().getMinimizeToTray()) {
+            tray.showInTray();
+        }
+        primaryStage.setOnCloseRequest(e ->  {
+            Platform.exit();
+            System.exit(0);
+        });
     }
+
 
     public static void main(String[] args) {
         launch(args);
