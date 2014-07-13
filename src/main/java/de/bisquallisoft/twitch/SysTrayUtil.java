@@ -6,6 +6,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.net.URL;
 
 /**
@@ -80,12 +82,23 @@ public class SysTrayUtil {
         trayIcon = new TrayIcon(Toolkit.getDefaultToolkit().getImage(resource));
         trayIcon.setImageAutoSize(true);
         trayIcon.setPopupMenu(popup);
-        trayIcon.addActionListener(e -> {
-            Platform.runLater(() -> {
-                primaryStage.setIconified(false);
-                primaryStage.show();
-            });
-            log.debug("showing primary stage");
+//        trayIcon.addActionListener(e -> {
+//            Platform.runLater(() -> {
+//                primaryStage.setIconified(false);
+//                primaryStage.show();
+//            });
+//            log.debug("showing primary stage");
+//        });
+        trayIcon.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 1) {
+                    Platform.runLater(() -> {
+                        primaryStage.setIconified(false);
+                        primaryStage.show();
+                    });
+                }
+            }
         });
     }
 
