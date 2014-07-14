@@ -21,6 +21,8 @@ public class SysTrayUtil {
     private SystemTray tray;
     private double y;
     private double x;
+    private double width;
+    private double height;
 
     public SysTrayUtil(Stage primaryStage) {
         log.debug("primarystage: {}", primaryStage);
@@ -56,14 +58,18 @@ public class SysTrayUtil {
                 } else {
                     primaryStage.setX(x);
                     primaryStage.setY(y);
+                    primaryStage.setWidth(width);
+                    primaryStage.setHeight(height);
                     removeFromTray();
                 }
             }
         });
 
-        //javafx sucks
+        //---javafx sucks
         x = primaryStage.getX();
         y = primaryStage.getY();
+        width = primaryStage.getWidth();
+        height = primaryStage.getHeight();
 
         primaryStage.xProperty().addListener((observableValue, number, newValue) -> {
             if(newValue.doubleValue() > -30000 && newValue.intValue() != 8)
@@ -75,6 +81,19 @@ public class SysTrayUtil {
                 y = newValue.doubleValue();
         });
 
+        primaryStage.widthProperty().addListener((observableValue, number, nv) -> {
+            if(nv.intValue() != 160) {
+                width = nv.doubleValue();
+            }
+        });
+
+        primaryStage.heightProperty().addListener((observableValue, number, nv) -> {
+            if (nv.intValue() != 29) {
+                height = nv.doubleValue();
+            }
+        });
+        //---grow up javafx
+
     }
 
     private void initTrayIcon(Stage primaryStage, PopupMenu popup) {
@@ -82,17 +101,10 @@ public class SysTrayUtil {
         trayIcon = new TrayIcon(Toolkit.getDefaultToolkit().getImage(resource));
         trayIcon.setImageAutoSize(true);
         trayIcon.setPopupMenu(popup);
-//        trayIcon.addActionListener(e -> {
-//            Platform.runLater(() -> {
-//                primaryStage.setIconified(false);
-//                primaryStage.show();
-//            });
-//            log.debug("showing primary stage");
-//        });
         trayIcon.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if (e.getClickCount() == 1) {
+                if (e.getClickCount() == 1 && e.getButton() == MouseEvent.BUTTON1) {
                     Platform.runLater(() -> {
                         primaryStage.setIconified(false);
                         primaryStage.show();
