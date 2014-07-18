@@ -19,10 +19,11 @@ public class SysTrayUtil {
 
     private TrayIcon trayIcon;
     private SystemTray tray;
-    private double y;
-    private double x;
-    private double width;
-    private double height;
+
+    private LimitedQueue<Double> widthQueue = new LimitedQueue<>(2);
+    private LimitedQueue<Double> heightQueue = new LimitedQueue<>(2);
+    private LimitedQueue<Double> yQueue = new LimitedQueue<>(2);
+    private LimitedQueue<Double> xQueue = new LimitedQueue<>(2);
 
     public SysTrayUtil(Stage primaryStage) {
         log.debug("primarystage: {}", primaryStage);
@@ -56,41 +57,36 @@ public class SysTrayUtil {
                     primaryStage.close();
                     showInTray();
                 } else {
-                    primaryStage.setX(x);
-                    primaryStage.setY(y);
-                    primaryStage.setWidth(width);
-                    primaryStage.setHeight(height);
+                    log.debug("queue: {}", widthQueue);
+                    primaryStage.setX(xQueue.getFirst());
+                    primaryStage.setY(yQueue.getFirst());
+                    primaryStage.setWidth(widthQueue.getFirst());
+                    primaryStage.setHeight(heightQueue.getFirst());
                     removeFromTray();
                 }
             }
         });
 
         //---javafx sucks
-        x = primaryStage.getX();
-        y = primaryStage.getY();
-        width = primaryStage.getWidth();
-        height = primaryStage.getHeight();
+        xQueue.add(primaryStage.getX());
+        yQueue.add(primaryStage.getY());
+        widthQueue.add(primaryStage.getWidth());
+        heightQueue.add(primaryStage.getHeight());
 
         primaryStage.xProperty().addListener((observableValue, number, newValue) -> {
-            if(newValue.doubleValue() > -30000 && newValue.intValue() != 8)
-                x = newValue.doubleValue();
+            xQueue.add(newValue.doubleValue());
         });
 
         primaryStage.yProperty().addListener((observableValue, number, newValue) -> {
-            if(newValue.doubleValue() > -30000 && newValue.intValue() != 32)
-                y = newValue.doubleValue();
+                yQueue.add(newValue.doubleValue());
         });
 
         primaryStage.widthProperty().addListener((observableValue, number, nv) -> {
-            if(nv.intValue() != 160) {
-                width = nv.doubleValue();
-            }
+            widthQueue.add(nv.doubleValue());
         });
 
         primaryStage.heightProperty().addListener((observableValue, number, nv) -> {
-            if (nv.intValue() != 29) {
-                height = nv.doubleValue();
-            }
+            heightQueue.add(nv.doubleValue());
         });
         //---grow up javafx
 
