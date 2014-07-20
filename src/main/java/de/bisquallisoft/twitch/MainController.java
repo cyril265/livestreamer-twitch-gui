@@ -215,7 +215,7 @@ public class MainController implements Initializable {
 
 
         try {
-            new ProcessBuilder("livestreamer", url, settings.getQuality(), "--no-version-check", "-Q").start();
+            new ProcessBuilder("livestreamer", url, settings.getQuality(), "--no-version-check", "-Q", "--retry-open", "3", "--retry-streams", "5").start();
             livestreamerProgess.setVisible(true);
             livestreamerProgess.setProgress(-1);
 
