@@ -1,7 +1,7 @@
 Livestreamer Twitch GUI
 =======================
 
-This program displays a periodically updated list of your followed online streams and enables you to launch playback using [Livestreamer] (http://livestreamer.readthedocs.org/en/latest).
+This program displays a periodically updated list of your followed online twitch streams and enables you to launch playback using [Livestreamer] (http://livestreamer.readthedocs.org/en/latest).
 
 ![Alt text](https://raw.github.com/squalloser/livestreamer-twitch-gui/screenshots/screenshot1.jpg)
 
