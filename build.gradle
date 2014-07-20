@@ -1,7 +1,7 @@
 apply plugin: 'java'
 apply plugin: 'idea'
 
-def mainClassName = "de.bisquallisoft.twitch.App"
+ext.mainClass = "de.bisquallisoft.twitch.App"
 
 sourceCompatibility = 1.8
 version = '1.0-RC2'
@@ -17,7 +17,7 @@ task uberJar(type: Jar) {
     }
     exclude 'META-INF/**'
     manifest {
-        attributes 'Main-Class': mainClassName
+        attributes 'Main-Class': mainClass
     }
 }
 
