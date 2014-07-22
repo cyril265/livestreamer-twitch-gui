@@ -5,6 +5,8 @@ import de.bisquallisoft.twitch.json.stream.StreamResource;
 import org.apache.http.client.fluent.Request;
 
 import java.io.IOException;
+import java.net.SocketTimeoutException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -52,6 +54,8 @@ public class TwitchApi {
                         return stream;
                     })
                     .collect(Collectors.toList());
+        } catch (SocketTimeoutException ste) {
+            return new ArrayList<>();
         } catch (IOException e) {
             throw new RuntimeException("could not request users streams", e);
         }
