@@ -17,37 +17,22 @@ public class SysTrayUtil {
     private static final Logger log = LoggerFactory.getLogger(SysTrayUtil.class);
 
 
-    private TrayIcon trayIcon;
-    private SystemTray tray;
+    private static TrayIcon trayIcon;
+    private static SystemTray tray;
 
-    private LimitedQueue<Double> widthQueue = new LimitedQueue<>(2);
-    private LimitedQueue<Double> heightQueue = new LimitedQueue<>(2);
-    private LimitedQueue<Double> yQueue = new LimitedQueue<>(2);
-    private LimitedQueue<Double> xQueue = new LimitedQueue<>(2);
+    private static LimitedQueue<Double> widthQueue = new LimitedQueue<>(2);
+    private static LimitedQueue<Double> heightQueue = new LimitedQueue<>(2);
+    private static LimitedQueue<Double> yQueue = new LimitedQueue<>(2);
+    private static LimitedQueue<Double> xQueue = new LimitedQueue<>(2);
 
-    public SysTrayUtil(Stage primaryStage) {
-        log.debug("primarystage: {}", primaryStage);
-
+    public static void init(Stage primaryStage) {
         if (!SystemTray.isSupported()) {
             log.warn("system tray not supported");
             return;
         }
-
-        final PopupMenu popup = new PopupMenu();
-
         tray = SystemTray.getSystemTray();
 
-        // Create a pop-up menu components
-        MenuItem exitItem = new MenuItem("Exit");
-
-        //Add components to pop-up menu
-        popup.add(exitItem);
-
-        exitItem.addActionListener(e -> {
-            Platform.exit();
-            System.exit(0);
-        });
-
+        PopupMenu popup = initPopupMenu();
         initTrayIcon(primaryStage, popup);
 
         //handle minimize/restore
@@ -78,7 +63,7 @@ public class SysTrayUtil {
         });
 
         primaryStage.yProperty().addListener((observableValue, number, newValue) -> {
-                yQueue.add(newValue.doubleValue());
+            yQueue.add(newValue.doubleValue());
         });
 
         primaryStage.widthProperty().addListener((observableValue, number, nv) -> {
@@ -92,7 +77,20 @@ public class SysTrayUtil {
 
     }
 
-    private void initTrayIcon(Stage primaryStage, PopupMenu popup) {
+    private static PopupMenu initPopupMenu() {
+        final PopupMenu popup = new PopupMenu();
+
+        MenuItem exitItem = new MenuItem("Exit");
+        exitItem.addActionListener(e -> {
+            Platform.exit();
+            System.exit(0);
+        });
+
+        popup.add(exitItem);
+        return popup;
+    }
+
+    private static void initTrayIcon(Stage primaryStage, PopupMenu popup) {
         URL resource = SysTrayUtil.class.getResource("/app-icon.png");
         trayIcon = new TrayIcon(Toolkit.getDefaultToolkit().getImage(resource));
         trayIcon.setImageAutoSize(true);
@@ -111,7 +109,7 @@ public class SysTrayUtil {
     }
 
 
-    void showInTray() {
+    static void showInTray() {
         try {
             tray.add(trayIcon);
             Platform.setImplicitExit(false);
@@ -120,7 +118,7 @@ public class SysTrayUtil {
         }
     }
 
-    void removeFromTray() {
+    static void removeFromTray() {
         tray.remove(trayIcon);
         Platform.setImplicitExit(true);
     }

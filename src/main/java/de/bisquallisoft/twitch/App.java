@@ -31,7 +31,8 @@ public class App extends Application {
         primaryStage.getIcons().add(new Image("/app-icon.png"));
         primaryStage.show();
 
-        SysTrayUtil tray = new SysTrayUtil(primaryStage);
+        SysTrayUtil.init(primaryStage);
+
         primaryStage.setOnCloseRequest(e ->  {
             Platform.exit();
             System.exit(0);
