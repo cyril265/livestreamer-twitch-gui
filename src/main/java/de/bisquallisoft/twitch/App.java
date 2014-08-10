@@ -1,5 +1,6 @@
 package de.bisquallisoft.twitch;
 
+import de.bisquallisoft.twitch.controller.MainController;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;

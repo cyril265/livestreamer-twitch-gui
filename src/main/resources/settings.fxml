@@ -3,7 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<GridPane hgap="5.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" pickOnBounds="false" prefHeight="254.0" prefWidth="300.0" stylesheets="style.css" vgap="5.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.bisquallisoft.twitch.SettingsController">
+<GridPane hgap="5.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" pickOnBounds="false" prefHeight="254.0" prefWidth="300.0" stylesheets="style.css" vgap="5.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.bisquallisoft.twitch.controller.SettingsController">
   <columnConstraints>
     <ColumnConstraints hgrow="NEVER" maxWidth="196.0" minWidth="-Infinity" prefWidth="154.0" />
     <ColumnConstraints fillWidth="false" halignment="LEFT" hgrow="NEVER" maxWidth="175.0" minWidth="0.0" prefWidth="171.0" />

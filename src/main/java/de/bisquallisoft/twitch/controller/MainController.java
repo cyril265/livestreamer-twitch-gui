@@ -1,5 +1,9 @@
-package de.bisquallisoft.twitch;
+package de.bisquallisoft.twitch.controller;
 
+import de.bisquallisoft.twitch.FxScheduler;
+import de.bisquallisoft.twitch.Settings;
+import de.bisquallisoft.twitch.Stream;
+import de.bisquallisoft.twitch.TwitchApi;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -73,13 +77,35 @@ public class MainController implements Initializable {
         previewImage.fitWidthProperty().bind(imageParent.widthProperty());
         previewImage.fitHeightProperty().bind(imageParent.heightProperty());
 
+        //refresh streams periodically
+        scheduledRefresh = FxScheduler.schedule(Duration.minutes(settings.getUpdateInterval()), this::refreshStreams);
+        //add handler to reschedule stream refreshing when interval changes
+        settings.updateIntervalProperty().addListener((observableValue, ov, nv) -> {
+            scheduledRefresh.stop();
+            scheduledRefresh = FxScheduler.schedule(Duration.minutes(nv.doubleValue()), this::refreshStreams);
+        });
+
+        initTwitchApi();
+        initStreamList();
+
+        Platform.runLater(streamList::requestFocus);
+    }
+
+    private void initTwitchApi() {
         if (settings.getAuthToken() == null) {
             String authToken = authenticate(primaryStage);
             settings.setAuthToken(authToken);
-            settings.save();
         }
         api = new TwitchApi(settings.getAuthToken());
+        if (!api.isAuthValid()) {
+            String authToken = authenticate(primaryStage);
+            settings.setAuthToken(authToken);
+            api.setAuthToken(authToken);
+        }
+        settings.save();
+    }
 
+    private void initStreamList() {
         streamList.getSelectionModel().selectedItemProperty().addListener((observableValue, ov, nv) -> {
             if (nv != null) {
                 previewImage.setImage(null);
@@ -87,22 +113,13 @@ public class MainController implements Initializable {
             }
         });
 
-        //refresh streams periodically
-        scheduledRefresh = FxScheduler.schedule(Duration.minutes(settings.getUpdateInterval()), this::refreshStreams);
-
-        //add handler to reschedule stream refreshing when interval changes
-        settings.updateIntervalProperty().addListener((observableValue, ov, nv) -> {
-            scheduledRefresh.stop();
-            scheduledRefresh = FxScheduler.schedule(Duration.minutes(nv.doubleValue()), this::refreshStreams);
-        });
-
         streamLink.setOnAction(this::streamLinkAction);
         streamList.getItems().setAll(api.getFollowedStreams());
         if (!streamList.getItems().isEmpty()) {
             streamList.getSelectionModel().select(0);
         }
-        Platform.runLater(streamList::requestFocus);
     }
+
 
     @FXML
     private void openSettingsWindow(ActionEvent event) {
@@ -163,7 +180,7 @@ public class MainController implements Initializable {
 
     void streamLinkAction(ActionEvent event) {
         String text = streamLink.getText();
-        if(text.startsWith("http") || text.startsWith("www") | text.startsWith("twitch")) {
+        if (text.startsWith("http") || text.startsWith("www") | text.startsWith("twitch")) {
             launchLivestreamer(text);
         } else {
             launchLivestreamer("twitch.tv/" + text);
@@ -255,7 +272,7 @@ public class MainController implements Initializable {
         return result.toString();
     }
 
-    void setPrimaryStage(Stage primaryStage) {
+    public void setPrimaryStage(Stage primaryStage) {
         this.primaryStage = primaryStage;
     }
 }

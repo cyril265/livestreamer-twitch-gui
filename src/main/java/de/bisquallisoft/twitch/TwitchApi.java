@@ -2,6 +2,7 @@ package de.bisquallisoft.twitch;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.bisquallisoft.twitch.json.stream.StreamResource;
+import org.apache.http.client.HttpResponseException;
 import org.apache.http.client.fluent.Request;
 
 import java.io.IOException;
@@ -27,7 +28,12 @@ public class TwitchApi {
         this.authToken = authToken;
     }
 
-    public List<Stream> getFollowedStreams() {
+    /**
+     *
+     * @return
+     * @throws de.bisquallisoft.twitch.UnauthorizedException
+     */
+    public List<Stream> getFollowedStreams()  {
         try {
             String response = Request.Get("https://api.twitch.tv/kraken/streams/followed?limit=100")
                     .addHeader("Accept", "application/vnd.twitchtv.v3+json")
@@ -54,6 +60,13 @@ public class TwitchApi {
                         return stream;
                     })
                     .collect(Collectors.toList());
+
+        }catch (HttpResponseException hre) {
+            if (hre.getStatusCode() == 401 || hre.getStatusCode() == 403) {
+                throw new UnauthorizedException(hre.getMessage());
+            } else {
+                throw new RuntimeException("could not request users streams", hre);
+            }
         } catch (SocketTimeoutException ste) {
             return new ArrayList<>();
         } catch (IOException e) {
@@ -61,4 +74,16 @@ public class TwitchApi {
         }
     }
 
+    public boolean isAuthValid() {
+        try {
+            getFollowedStreams();
+            return true;
+        } catch (UnauthorizedException e) {
+            return false;
+        }
+    }
+
+    public void setAuthToken(String authToken) {
+        this.authToken = authToken;
+    }
 }

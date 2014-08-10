@@ -1,5 +1,6 @@
-package de.bisquallisoft.twitch;
+package de.bisquallisoft.twitch.controller;
 
+import de.bisquallisoft.twitch.Settings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
