@@ -28,6 +28,7 @@ public class App extends Application {
 
         MainController controller = loader.getController();
         controller.setPrimaryStage(primaryStage);
+        controller.setHostServices(getHostServices());
 
         primaryStage.getIcons().add(new Image("/app-icon.png"));
         primaryStage.show();

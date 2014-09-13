@@ -5,6 +5,7 @@ import de.bisquallisoft.twitch.Settings;
 import de.bisquallisoft.twitch.Stream;
 import de.bisquallisoft.twitch.TwitchApi;
 import javafx.animation.Timeline;
+import javafx.application.HostServices;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -12,6 +13,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
@@ -71,6 +73,7 @@ public class MainController implements Initializable {
     private TwitchApi api;
     private Settings settings = Settings.getInstance();
     private Timeline scheduledRefresh;
+    private HostServices hostServices;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -251,6 +254,10 @@ public class MainController implements Initializable {
 
     }
 
+    public void setHostServices(HostServices hostServices) {
+        this.hostServices = hostServices;
+    }
+
     private String authenticate(Window parent) {
         WebView webView = new WebView();
         webView.getEngine().load(TwitchApi.AUTH_URL);
@@ -274,5 +281,11 @@ public class MainController implements Initializable {
 
     public void setPrimaryStage(Stage primaryStage) {
         this.primaryStage = primaryStage;
+    }
+
+    @FXML
+    void openChat(ActionEvent actionEvent) {
+        Stream selectedStream = streamList.getSelectionModel().getSelectedItem();
+        hostServices.showDocument(String.format("http://www.twitch.tv/%s/chat?popout=", selectedStream.getName()));
     }
 }
