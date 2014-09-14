@@ -282,7 +282,8 @@ public class MainController implements Initializable {
 
     @FXML
     void openChat(ActionEvent actionEvent) {
+        String chatLink = "http://www.twitch.tv/%s/chat";
         Stream selectedStream = streamList.getSelectionModel().getSelectedItem();
-        hostServices.showDocument(String.format("http://www.twitch.tv/%s/chat?popout=", selectedStream.getName()));
+        hostServices.showDocument(String.format(chatLink, selectedStream.getName().toLowerCase()));
     }
 }
