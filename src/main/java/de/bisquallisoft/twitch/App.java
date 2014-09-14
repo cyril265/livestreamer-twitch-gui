@@ -35,7 +35,7 @@ public class App extends Application {
 
         SysTrayUtil.init(primaryStage);
 
-        primaryStage.setOnCloseRequest(e ->  {
+        primaryStage.setOnCloseRequest(e -> {
             Platform.exit();
             System.exit(0);
         });

@@ -123,7 +123,6 @@ public class MainController implements Initializable {
         }
     }
 
-
     @FXML
     private void openSettingsWindow(ActionEvent event) {
 
@@ -233,7 +232,6 @@ public class MainController implements Initializable {
         livestreamerProgess.setPrefHeight(imageParent.getHeight());
         livestreamerProgess.setPrefWidth(imageParent.getWidth());
 
-
         try {
             new ProcessBuilder("livestreamer", url, settings.getQuality(), "--no-version-check", "-Q", "--retry-open", "3", "--retry-streams", "1").start();
             livestreamerProgess.setVisible(true);
@@ -250,7 +248,6 @@ public class MainController implements Initializable {
                     .message("Please install livestreamer: livestreamer.readthedocs.org")
                     .showError();
         }
-
 
     }
 

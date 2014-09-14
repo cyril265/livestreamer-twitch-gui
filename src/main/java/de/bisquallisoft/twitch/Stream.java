@@ -13,7 +13,7 @@ public class Stream {
     private String game;
     private String lastUpdateTime;
     private String logo;
-    
+
     public String getPreviewImage() {
         return previewImage;
     }
@@ -83,8 +83,6 @@ public class Stream {
         this.logo = logo;
     }
 
-    
-    
     @Override
     public boolean equals(Object o) {
         if (this == o) {
