@@ -13,5 +13,5 @@ Requirements
 
 Known issues
 ------
-- Restore after minimize to tray function doesn't work properly on some OS
+- Restore after minimize to tray doesn't work properly on some OS
 - Icon looks weird on some OS
