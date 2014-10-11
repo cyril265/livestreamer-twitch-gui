@@ -11,3 +11,7 @@ Requirements
 - [Java 8] (http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html)
 - [Livestreamer] (http://livestreamer.readthedocs.org/en/latest/) in path
 
+Known issues
+------
+- Restore after minimize to tray function doesn't work properly on some OS
+- Icon looks weird on some OS
