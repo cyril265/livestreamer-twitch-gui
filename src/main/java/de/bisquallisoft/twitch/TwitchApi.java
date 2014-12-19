@@ -33,7 +33,7 @@ public class TwitchApi {
      * @return
      * @throws de.bisquallisoft.twitch.UnauthorizedException
      */
-    public List<Stream> getFollowedStreams()  {
+    public List<Stream> getFollowedStreams() throws SocketTimeoutException  {
         try {
             String response = Request.Get("https://api.twitch.tv/kraken/streams/followed?limit=100")
                     .addHeader("Accept", "application/vnd.twitchtv.v3+json")
@@ -67,18 +67,18 @@ public class TwitchApi {
             } else {
                 throw new RuntimeException("could not request users streams", hre);
             }
-        } catch (SocketTimeoutException ste) {
-            return new ArrayList<>();
         } catch (IOException e) {
             throw new RuntimeException("could not request users streams", e);
         }
     }
 
-    public boolean isAuthValid() {
+    public boolean isAuthValid()  {
         try {
             getFollowedStreams();
             return true;
         } catch (UnauthorizedException e) {
+            return false;
+        } catch (SocketTimeoutException e) {
             return false;
         }
     }
