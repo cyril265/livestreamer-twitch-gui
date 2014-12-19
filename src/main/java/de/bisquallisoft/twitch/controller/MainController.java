@@ -37,10 +37,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.ResourceBundle;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.function.Consumer;
 
 public class MainController implements Initializable {
 
@@ -117,7 +124,11 @@ public class MainController implements Initializable {
         });
 
         streamLink.setOnAction(this::streamLinkAction);
-        streamList.getItems().setAll(api.getFollowedStreams());
+        try {
+            streamList.getItems().setAll(api.getFollowedStreams());
+        } catch (SocketTimeoutException e) {
+            log.info("Twitch API timeout");
+        }
         if (!streamList.getItems().isEmpty()) {
             streamList.getSelectionModel().select(0);
         }
@@ -148,21 +159,26 @@ public class MainController implements Initializable {
         List<Stream> oldStreamList = new ArrayList<>();
         streamList.getItems().forEach(oldStreamList::add);
         Stream selectedItem = streamList.getSelectionModel().getSelectedItem();
-        streamList.getItems().setAll(api.getFollowedStreams());
-        if (!streamList.getItems().isEmpty()) {
-            if (selectedItem != null && streamList.getItems().contains(selectedItem)) {
-                streamList.getSelectionModel().select(selectedItem);
-            } else {
-                streamList.getSelectionModel().select(0);
+        try {
+            streamList.getItems().setAll(api.getFollowedStreams());
+            if (!streamList.getItems().isEmpty()) {
+                if (selectedItem != null && streamList.getItems().contains(selectedItem)) {
+                    streamList.getSelectionModel().select(selectedItem);
+                } else {
+                    streamList.getSelectionModel().select(0);
+                }
+                showNotifications(oldStreamList);
             }
-            showNotifications(oldStreamList);
+        } catch (SocketTimeoutException e) {
+            log.info("Twitch API timeout");
         }
-
     }
 
     private void showNotifications(List<Stream> oldStreamList) {
         if (settings.isNotifications()) {
-            streamList.getItems().stream().filter(s -> !oldStreamList.contains(s)).forEach(s -> {
+            streamList.getItems().stream()
+                    .filter(Objects::nonNull)
+                    .filter(s -> !oldStreamList.contains(s)).forEach(s -> {
 
                 ImageView img = new ImageView(s.getLogo());
                 img.setFitHeight(40.0);
@@ -211,11 +227,9 @@ public class MainController implements Initializable {
     }
 
     private void setPreview(Stream stream) {
-        FxScheduler.runAsync(() -> {
-            Image img = new Image(stream.getPreviewImage());
-            Platform.runLater(() -> previewImage.setImage(img));
+        FxScheduler.runAsync(() -> new Image(stream.getPreviewImage()), image -> {
+            Platform.runLater(() -> previewImage.setImage(image));
         });
-
         imgLogo.setImage(new Image(stream.getLogo()));
         txtStreamName.setText(stream.getName());
         txtStreamStatus.setText(stream.getStatus());
