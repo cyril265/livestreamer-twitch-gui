@@ -1,5 +1,7 @@
 package de.bisquallisoft.twitch;
 
+import java.util.Objects;
+
 /**
  * @author squall
  */
@@ -94,7 +96,7 @@ public class Stream {
 
         Stream stream = (Stream) o;
 
-        if (!url.equals(stream.url)) {
+        if (!Objects.equals(url, stream.url)) {
             return false;
         }
 
