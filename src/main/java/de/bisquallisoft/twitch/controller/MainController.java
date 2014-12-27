@@ -227,9 +227,7 @@ public class MainController implements Initializable {
     }
 
     private void setPreview(Stream stream) {
-        FxScheduler.runAsync(() -> new Image(stream.getPreviewImage()), image -> {
-            Platform.runLater(() -> previewImage.setImage(image));
-        });
+        FxScheduler.runAsync(() -> new Image(stream.getPreviewImage()), previewImage::setImage);
         imgLogo.setImage(new Image(stream.getLogo()));
         txtStreamName.setText(stream.getName());
         txtStreamStatus.setText(stream.getStatus());

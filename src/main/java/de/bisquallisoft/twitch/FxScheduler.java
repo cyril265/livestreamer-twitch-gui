@@ -38,13 +38,15 @@ public class FxScheduler {
     private static ExecutorService executorService = Executors.newCachedThreadPool();
 
     public static <V> void runAsync(Callable<V> task, Consumer<V> resultConsumer) {
-        new Thread( () -> {
+        new Thread(() -> {
             Future<V> future = executorService.submit(task);
-            try {
-                resultConsumer.accept(future.get());
-            } catch (InterruptedException | ExecutionException e) {
-                e.printStackTrace();
-            }
+            Platform.runLater(() -> {
+                try {
+                    resultConsumer.accept(future.get());
+                } catch (InterruptedException | ExecutionException e) {
+                    throw new RuntimeException(e);
+                }
+            });
         }).start();
     }
 }
