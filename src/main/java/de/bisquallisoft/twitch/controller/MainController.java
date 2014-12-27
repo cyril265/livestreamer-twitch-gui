@@ -245,7 +245,7 @@ public class MainController implements Initializable {
         livestreamerProgess.setPrefWidth(imageParent.getWidth());
 
         try {
-            new ProcessBuilder("livestreamer", url, settings.getQuality(), "--no-version-check", "-Q", "--retry-open", "3", "--retry-streams", "1").start();
+            new ProcessBuilder("livestreamer", url, settings.getQuality(), "--no-version-check", "-Q", "--retry-open", "3").start();
             livestreamerProgess.setVisible(true);
             livestreamerProgess.setProgress(-1);
 
