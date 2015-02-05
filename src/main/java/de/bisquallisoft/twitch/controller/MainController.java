@@ -13,7 +13,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
@@ -36,18 +35,14 @@ import org.controlsfx.dialog.Dialogs;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
+import java.io.*;
+import java.net.MalformedURLException;
 import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.function.Consumer;
 
 public class MainController implements Initializable {
 
@@ -226,9 +221,45 @@ public class MainController implements Initializable {
         }
     }
 
+    private InputStream downloadImg(String link) {
+        try {
+            URL url = new URL(link);
+            BufferedInputStream in = new BufferedInputStream(url.openStream());
+            ByteArrayOutputStream out = new ByteArrayOutputStream();
+            byte[] buf = new byte[1024];
+            int n;
+            while (-1 != (n = in.read(buf))) {
+                out.write(buf, 0, n);
+            }
+            out.close();
+            in.close();
+            byte[] response = out.toByteArray();
+
+            return new ByteArrayInputStream(response);
+        } catch (IOException e) {
+            log.error("stuff");
+        }
+        return null;
+    }
+
+
     private void setPreview(Stream stream) {
-        FxScheduler.runAsync(() -> new Image(stream.getPreviewImage()), previewImage::setImage);
-        FxScheduler.runAsync(() -> new Image(stream.getLogo()), imgLogo::setImage);
+        new Thread(() -> {
+            InputStream inputStream = downloadImg(stream.getPreviewImage());
+            if (inputStream != null) {
+                Image previewImage = new Image(inputStream);
+                Platform.runLater(() -> this.previewImage.setImage(previewImage));
+            }
+        }).start();
+
+        new Thread(() -> {
+            InputStream inputStream = downloadImg(stream.getLogo());
+            if (inputStream != null) {
+                Image previewImage = new Image(inputStream);
+                Platform.runLater(() -> this.imgLogo.setImage(previewImage));
+            }
+        }).start();
+
         txtStreamName.setText(stream.getName());
         txtStreamStatus.setText(stream.getStatus());
         txtViewers.setText(stream.getViewers() + "");
