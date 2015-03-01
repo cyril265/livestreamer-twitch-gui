@@ -1,4 +1,4 @@
-package de.bisquallisoft.twitch;
+package de.bisquallisoft.twitch.utils;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;

@@ -1,5 +1,6 @@
-package de.bisquallisoft.twitch;
+package de.bisquallisoft.twitch.utils;
 
+import de.bisquallisoft.twitch.Settings;
 import javafx.application.Platform;
 import javafx.stage.Stage;
 import org.slf4j.Logger;
