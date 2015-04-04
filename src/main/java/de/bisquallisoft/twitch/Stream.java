@@ -105,6 +105,6 @@ public class Stream {
 
     @Override
     public int hashCode() {
-        return url.hashCode();
+        return Objects.hashCode(url.hashCode());
     }
 }
