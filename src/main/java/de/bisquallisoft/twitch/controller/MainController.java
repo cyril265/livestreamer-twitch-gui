@@ -98,12 +98,12 @@ public class MainController implements Initializable {
 
     private void initTwitchApi() {
         if (settings.getAuthToken() == null) {
-            String authToken = authenticate(primaryStage);
+            String authToken = authenticate();
             settings.setAuthToken(authToken);
         }
         api = new TwitchApi(settings.getAuthToken());
         if (!api.isAuthValid()) {
-            String authToken = authenticate(primaryStage);
+            String authToken = authenticate();
             settings.setAuthToken(authToken);
             api.setAuthToken(authToken);
         }
@@ -131,7 +131,6 @@ public class MainController implements Initializable {
 
     @FXML
     private void openSettingsWindow(ActionEvent event) {
-
         Parent root;
         try {
             root = FXMLLoader.load(getClass().getResource("/settings.fxml"));
@@ -279,14 +278,14 @@ public class MainController implements Initializable {
         this.hostServices = hostServices;
     }
 
-    private String authenticate(Window parent) {
+    private String authenticate() {
         WebView webView = new WebView();
         webView.getEngine().load(TwitchApi.AUTH_URL);
 
         Stage popup = new Stage();
         popup.setScene(new Scene((webView)));
         popup.initModality(Modality.APPLICATION_MODAL);
-        popup.initOwner(parent);
+        popup.initOwner(primaryStage);
 
         StringBuilder result = new StringBuilder();
         webView.getEngine().locationProperty().addListener((observableValue, ov, url) -> {

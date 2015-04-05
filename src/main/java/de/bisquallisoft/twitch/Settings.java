@@ -25,7 +25,7 @@ public class Settings {
     private static final Path SETTINGS_DIR;
     private static final Path SETTINGS_FILE;
     private static Settings instance;
-    private final static ObjectMapper mapper = new ObjectMapper();
+    private final static ObjectMapper mapper;
 
     private String authToken;
     private SimpleIntegerProperty updateInterval = new SimpleIntegerProperty(3);
@@ -34,6 +34,7 @@ public class Settings {
     private SimpleBooleanProperty minimizeToTray = new SimpleBooleanProperty(true);
 
     static {
+        mapper = new ObjectMapper();
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
 
         String userDir = System.getenv("LOCALAPPDATA");
@@ -56,7 +57,6 @@ public class Settings {
             log.error("error creating settings directory", e);
             System.exit(-1);
         }
-
     }
 
 
